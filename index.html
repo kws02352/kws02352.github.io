@@ -9,530 +9,153 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:        #0a0a0f;
-      --bg2:       #111118;
-      --bg3:       #1a1a24;
-      --border:    #2a2a3a;
-      --accent:    #4f8ef7;
-      --accent2:   #7c3aed;
-      --green:     #10b981;
-      --text:      #e2e8f0;
-      --text2:     #94a3b8;
-      --text3:     #64748b;
-      --mono:      'JetBrains Mono', monospace;
-      --sans:      'Noto Sans KR', sans-serif;
+      --bg:      #0a0a0f;
+      --bg2:     #111118;
+      --bg3:     #1a1a24;
+      --border:  #2a2a3a;
+      --accent:  #4f8ef7;
+      --accent2: #7c3aed;
+      --green:   #10b981;
+      --text:    #e2e8f0;
+      --text2:   #94a3b8;
+      --text3:   #64748b;
+      --mono:    'JetBrains Mono', monospace;
+      --sans:    'Noto Sans KR', sans-serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ── Noise overlay ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 4rem;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--text2);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: color 0.2s;
-    }
-
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 4rem; background: rgba(10,10,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.78rem; color: var(--text2); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 4rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
-    }
-
-    .hero-name {
-      font-size: clamp(3rem, 7vw, 6rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.35s forwards;
-    }
-
-    .hero-name span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-title {
-      font-family: var(--mono);
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: var(--text2);
-      margin-top: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.5s forwards;
-    }
-
-    .hero-desc {
-      max-width: 560px;
-      color: var(--text2);
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.65s forwards;
-    }
-
-    .hero-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.8s forwards;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.4rem;
-      border-radius: 6px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #6fa3f9;
-      transform: translateY(-2px);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text2);
-      border: 1px solid var(--border);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 3rem;
-      margin-top: 4rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.95s forwards;
-    }
-
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%); pointer-events: none; }
+    .hero-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s 0.2s forwards; }
+    .hero-name { font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; opacity: 0; animation: fadeUp 0.6s 0.35s forwards; }
+    .hero-name span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-title { font-family: var(--mono); font-size: clamp(1rem, 2vw, 1.3rem); color: var(--text2); margin-top: 1rem; opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
+    .hero-desc { max-width: 560px; color: var(--text2); margin-top: 1.5rem; font-size: 0.95rem; opacity: 0; animation: fadeUp 0.6s 0.65s forwards; }
+    .hero-links { display: flex; gap: 1rem; margin-top: 2.5rem; opacity: 0; animation: fadeUp 0.6s 0.8s forwards; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem; border-radius: 6px; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.05em; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #6fa3f9; transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; opacity: 0; animation: fadeUp 0.6s 0.95s forwards; }
     .stat-item { display: flex; flex-direction: column; gap: 0.3rem; }
+    .stat-num { font-family: var(--mono); font-size: 1.8rem; font-weight: 600; color: var(--accent); }
+    .stat-label { font-size: 0.75rem; color: var(--text3); letter-spacing: 0.05em; }
 
-    .stat-num {
-      font-family: var(--mono);
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
+    /* SECTION */
+    section { padding: 6rem 4rem; max-width: 1100px; margin: 0 auto; }
+    .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; }
+    .section-num { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.1em; }
+    .section-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
 
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--text3);
-      letter-spacing: 0.05em;
-    }
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+    .skill-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .skill-card-label { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 0.8rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: var(--mono); font-size: 0.72rem; padding: 0.25rem 0.65rem; border-radius: 4px; background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
 
-    /* ── SECTION COMMON ── */
-    section {
-      padding: 6rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .section-num {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-    }
-
-    .section-title {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .skill-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .skill-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    .skill-card-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      margin-bottom: 0.8rem;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      background: var(--bg3);
-      color: var(--text2);
-      border: 1px solid var(--border);
-    }
-
-    /* ── EXPERIENCE ── */
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
+    /* EXPERIENCE */
+    .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
     .exp-item:last-child { border-bottom: none; }
-
     .exp-meta { padding-top: 0.3rem; }
+    .exp-company { font-weight: 700; font-size: 1rem; }
+    .exp-period { font-family: var(--mono); font-size: 0.72rem; color: var(--text3); margin-top: 0.3rem; }
+    .exp-role-badge { display: inline-block; margin-top: 0.6rem; font-family: var(--mono); font-size: 0.68rem; padding: 0.2rem 0.55rem; border-radius: 3px; background: rgba(79,142,247,0.12); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); }
+    .exp-projects { display: flex; flex-direction: column; gap: 2rem; }
 
-    .exp-company {
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-    }
-
-    .exp-period {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text3);
-      margin-top: 0.3rem;
-    }
-
-    .exp-role-badge {
-      display: inline-block;
-      margin-top: 0.6rem;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 3px;
-      background: rgba(79,142,247,0.12);
-      color: var(--accent);
-      border: 1px solid rgba(79,142,247,0.25);
-    }
-
-    .exp-projects { display: flex; flex-direction: column; gap: 1.5rem; }
-
-    .project-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      transition: border-color 0.2s;
-    }
-
+    /* PROJECT CARD */
+    .project-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
     .project-card:hover { border-color: rgba(79,142,247,0.4); }
+    .project-card-header { padding: 1.5rem; }
+    .project-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; }
+    .project-period { font-family: var(--mono); font-size: 0.68rem; color: var(--text3); margin-bottom: 0.8rem; }
+    .project-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.7; }
+    .project-metrics { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .metric { font-family: var(--mono); font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px; background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
 
-    .project-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-    }
+    /* PROBLEM SOLUTION */
+    .problems-section { border-top: 1px solid var(--border); padding: 1.5rem; }
+    .problems-title { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+    .problem-item { margin-bottom: 1.8rem; }
+    .problem-item:last-child { margin-bottom: 0; }
+    .problem-label { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; }
+    .problem-label::before { content: '▸'; color: var(--accent); font-size: 0.7rem; }
+    .problem-body { font-size: 0.82rem; color: var(--text2); line-height: 1.65; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .solution-label { font-family: var(--mono); font-size: 0.68rem; color: var(--green); letter-spacing: 0.08em; margin-top: 0.6rem; margin-bottom: 0.3rem; padding-left: 1rem; }
+    .solution-body { font-size: 0.82rem; color: var(--text2); line-height: 1.65; padding-left: 1rem; }
 
-    .project-period {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--text3);
-      margin-bottom: 0.8rem;
-    }
+    /* IMAGES */
+    .img-block { margin-top: 1rem; padding-left: 1rem; }
+    .img-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-start; margin-top: 0.8rem; }
+    .img-caption { text-align: center; font-family: var(--mono); font-size: 0.65rem; color: var(--text3); margin-top: 0.4rem; }
+    .img-figure { display: flex; flex-direction: column; }
+    .img-figure img { border-radius: 8px; border: 1px solid var(--border); max-width: 100%; }
+    .img-full img { width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+    .img-half img { max-width: 280px; border-radius: 8px; border: 1px solid var(--border); }
+    .img-small img { max-width: 200px; border-radius: 8px; border: 1px solid var(--border); }
 
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--text2);
-      line-height: 1.65;
-    }
-
-    .project-metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1rem;
-    }
-
-    .metric {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      background: rgba(16,185,129,0.1);
-      color: var(--green);
-      border: 1px solid rgba(16,185,129,0.2);
-    }
-
-    .project-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.8rem;
-    }
-
-    /* ── AWARDS ── */
+    /* AWARDS */
     .awards-list { display: flex; flex-direction: column; gap: 1rem; }
-
-    .award-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-      padding: 1.2rem 1.5rem;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      transition: border-color 0.2s;
-    }
-
+    .award-item { display: flex; align-items: flex-start; gap: 1.2rem; padding: 1.2rem 1.5rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; transition: border-color 0.2s; }
     .award-item:hover { border-color: rgba(79,142,247,0.4); }
-
-    .award-icon {
-      font-size: 1.2rem;
-      margin-top: 0.1rem;
-      flex-shrink: 0;
-    }
-
+    .award-icon { font-size: 1.2rem; margin-top: 0.1rem; flex-shrink: 0; }
     .award-content { flex: 1; }
+    .award-title { font-weight: 600; font-size: 0.9rem; }
+    .award-sub { font-size: 0.8rem; color: var(--text2); margin-top: 0.2rem; }
+    .award-year { font-family: var(--mono); font-size: 0.7rem; color: var(--text3); white-space: nowrap; padding-top: 0.2rem; }
 
-    .award-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
+    /* ACTIVITIES */
+    .activities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+    .activity-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+    .activity-card:hover { border-color: rgba(79,142,247,0.4); transform: translateY(-3px); }
+    .activity-type { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 0.6rem; }
+    .activity-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .activity-sub { font-size: 0.8rem; color: var(--text2); margin-top: 0.3rem; line-height: 1.5; }
+    .activity-period { font-family: var(--mono); font-size: 0.7rem; color: var(--text3); margin-top: 0.3rem; }
 
-    .award-sub {
-      font-size: 0.8rem;
-      color: var(--text2);
-      margin-top: 0.2rem;
-    }
+    /* CONTACT */
+    .contact-section { text-align: center; padding: 6rem 4rem; }
+    .contact-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+    .contact-section p { color: var(--text2); margin-bottom: 2rem; font-size: 0.95rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
-    .award-year {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text3);
-      white-space: nowrap;
-      padding-top: 0.2rem;
-    }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.72rem; color: var(--text3); }
 
-    /* ── ACTIVITIES ── */
-    .activities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .activity-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .activity-card:hover {
-      border-color: rgba(79,142,247,0.4);
-      transform: translateY(-3px);
-    }
-
-    .activity-type {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      margin-bottom: 0.6rem;
-    }
-
-    .activity-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .activity-period {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--text3);
-    }
-
-    /* ── CONTACT ── */
-    .contact-section {
-      text-align: center;
-      padding: 6rem 4rem;
-    }
-
-    .contact-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .contact-section p {
-      color: var(--text2);
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text3);
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── SCROLLBAR ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .hero { padding: 7rem 1.5rem 3rem; }
       section { padding: 4rem 1.5rem; }
       .exp-item { grid-template-columns: 1fr; gap: 1rem; }
-      .hero-stats { gap: 2rem; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
       .contact-section { padding: 4rem 1.5rem; }
+      .img-half img { max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">kws02352 ~$</div>
   <ul class="nav-links">
@@ -558,22 +181,10 @@
     <a href="https://aikim.tistory.com" class="btn btn-ghost" target="_blank">Blog</a>
   </div>
   <div class="hero-stats">
-    <div class="stat-item">
-      <span class="stat-num">4+</span>
-      <span class="stat-label">YEARS EXP</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">2</span>
-      <span class="stat-label">PATENTS</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">1</span>
-      <span class="stat-label">SCI PAPER</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">60억</span>
-      <span class="stat-label">REVENUE IMPACT</span>
-    </div>
+    <div class="stat-item"><span class="stat-num">4+</span><span class="stat-label">YEARS EXP</span></div>
+    <div class="stat-item"><span class="stat-num">2</span><span class="stat-label">PATENTS</span></div>
+    <div class="stat-item"><span class="stat-num">1</span><span class="stat-label">SCI PAPER</span></div>
+    <div class="stat-item"><span class="stat-num">60억</span><span class="stat-label">REVENUE IMPACT</span></div>
   </div>
 </div>
 
@@ -587,42 +198,19 @@
   <div class="skills-grid">
     <div class="skill-card">
       <div class="skill-card-label">LANGUAGES</div>
-      <div class="skill-tags">
-        <span class="tag">Python (Expert)</span>
-        <span class="tag">C++ (Familiar)</span>
-      </div>
+      <div class="skill-tags"><span class="tag">Python (Expert)</span><span class="tag">C++ (Familiar)</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-card-label">AI / ML</div>
-      <div class="skill-tags">
-        <span class="tag">PyTorch</span>
-        <span class="tag">OpenCV</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">Deep Learning</span>
-        <span class="tag">Model Optimization</span>
-      </div>
+      <div class="skill-tags"><span class="tag">PyTorch</span><span class="tag">OpenCV</span><span class="tag">Computer Vision</span><span class="tag">Deep Learning</span><span class="tag">Model Optimization</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-card-label">LLM / VLM</div>
-      <div class="skill-tags">
-        <span class="tag">Hugging Face</span>
-        <span class="tag">vLLM</span>
-        <span class="tag">AWQ/FP8</span>
-        <span class="tag">Qwen3-VL</span>
-        <span class="tag">Stable Diffusion</span>
-        <span class="tag">LoRA</span>
-      </div>
+      <div class="skill-tags"><span class="tag">Hugging Face</span><span class="tag">vLLM</span><span class="tag">AWQ/FP8</span><span class="tag">Qwen3-VL</span><span class="tag">Stable Diffusion</span><span class="tag">LoRA</span></div>
     </div>
     <div class="skill-card">
       <div class="skill-card-label">DATA & TOOLS</div>
-      <div class="skill-tags">
-        <span class="tag">Pandas</span>
-        <span class="tag">NumPy</span>
-        <span class="tag">Git</span>
-        <span class="tag">Docker</span>
-        <span class="tag">Notion</span>
-        <span class="tag">JIRA</span>
-      </div>
+      <div class="skill-tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">Notion</span><span class="tag">JIRA</span></div>
     </div>
   </div>
 </section>
@@ -643,69 +231,254 @@
     </div>
     <div class="exp-projects">
 
+      <!-- VLM -->
       <div class="project-card">
-        <div class="project-name">VLM 기반 문서 OCR 솔루션 개발</div>
-        <div class="project-period">2025.10 — 현재</div>
-        <div class="project-desc">
-          비정형 행정/금융 문서의 복잡한 레이아웃과 문맥을 통합 이해하는 End-to-End KIE 모델 개발.
-          3인 팀 내 VLM 모델 선정, 데이터 파이프라인 구축 및 추론 최적화 주도.
-          보안 이슈로 수급 불가한 실제 문서를 대체하기 위해 합성 데이터 자동 생성 파이프라인을 독자 개발하여 특허 출원.
+        <div class="project-card-header">
+          <div class="project-name">VLM 기반 문서 OCR 솔루션 개발</div>
+          <div class="project-period">2025.10 — 현재 · 3인 팀</div>
+          <div class="project-desc">
+            카드 신청서, 주주명부 등 비정형 행정/금융 문서의 복잡한 레이아웃과 문맥을 이해하는 End-to-End KIE 모델 개발. VLM 모델 선정, 합성 데이터 파이프라인 구축, 추론 최적화 주도.
+          </div>
+          <div class="project-metrics">
+            <span class="metric">F1 Score 0.91 (+0.16 vs Zero-shot)</span>
+            <span class="metric">특허 출원</span>
+          </div>
+          <div class="project-stack">
+            <span class="tag">Qwen3-VL</span><span class="tag">vLLM</span><span class="tag">AWQ/FP8</span><span class="tag">DeepSpeed ZeRO-3</span><span class="tag">Flash Attention 2</span>
+          </div>
         </div>
-        <div class="project-metrics">
-          <span class="metric">F1 Score 0.91 (+0.16 vs Zero-shot)</span>
-          <span class="metric">특허 출원</span>
-        </div>
-        <div class="project-stack">
-          <span class="tag">Qwen3-VL</span>
-          <span class="tag">vLLM</span>
-          <span class="tag">AWQ/FP8</span>
-          <span class="tag">DeepSpeed</span>
-          <span class="tag">Flash Attention</span>
+        <div class="problems-section">
+          <div class="problems-title">// 문제 해결 과정</div>
+
+          <div class="problem-item">
+            <div class="problem-label">개인정보 이슈로 인한 학습 데이터 부재</div>
+            <div class="problem-body">행정/금융 문서는 개인정보 포함으로 리얼 데이터 수집이 불가능했습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              실제 문서의 레이아웃과 폰트 분포를 분석하여 Python 기반 문서 생성 엔진을 자체 개발. 인쇄 노이즈, 기울기, 도장 겹침 등 엣지 케이스를 포함한 47,000건의 합성 데이터 생성. 해당 파이프라인을 특허 출원(10-2026-0032723).
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-half">
+                  <img src="images/synth_doc1.png" alt="합성 문서 예시 1" loading="lazy" />
+                  <div class="img-caption">합성 행정 문서 예시</div>
+                </div>
+                <div class="img-figure img-half">
+                  <img src="images/synth_doc2.png" alt="합성 문서 예시 2" loading="lazy" />
+                  <div class="img-caption">합성 표 문서 예시</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">기존 OCR의 문맥 이해 부족</div>
+            <div class="problem-body">단순 OCR은 텍스트 위치만 찾을 뿐 Key-Value 문맥을 이해하지 못했습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">Qwen3-VL-8B 모델을 도입하여 Bounding Box 좌표와 텍스트 의미(Key)를 한 번의 추론으로 추출하도록 학습.</div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">거대 모델의 느린 추론 속도와 높은 메모리</div>
+            <div class="problem-body">8B 파라미터 모델은 GPU 메모리 소모가 커서 서비스 적용에 제약이 있었습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">AWQ/FP8 양자화로 메모리 사용량 개선(F1 delta -0.0002 수준의 손실). vLLM PagedAttention으로 A6000 1장에서 실시간 추론 가능하도록 최적화.</div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">생성형 모델의 출력 불안정성 (Hallucination)</div>
+            <div class="problem-body">결과 포맷이 깨지거나, 없는 단어를 생성하는 환각 현상 발생 위험이 있었습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">JSON 스키마 매핑 후처리 로직(Parser)을 구현하고, Constraint Decoding으로 필드 정합성 검증.</div>
+          </div>
         </div>
       </div>
 
+      <!-- Detection -->
       <div class="project-card">
-        <div class="project-name">카드/신분증 Detection 모델 개발 및 상용화</div>
-        <div class="project-period">2023.05 — 현재</div>
-        <div class="project-desc">
-          신분증/카드 인식 모델의 정확도 극대화 및 모바일 탑재를 위한 경량화.
-          Detection 모델 설계·개발·배포 전 과정 단독 수행, 상용화 이후 지속적인 성능 개선 및 기능 확장 담당.
-          분류 클래스 8→11종 확장 시 발생한 성능 하락을 Area Attention + Linear Attention 기반 아키텍처 재설계로 극복.
-          16만여 장 전수 데이터 분포 분석 기반 Augmentation 재설계 및 Loss 함수 전면 고도화.
+        <div class="project-card-header">
+          <div class="project-name">카드/신분증 Detection 모델 개발 및 상용화</div>
+          <div class="project-period">2023.05 — 현재 · 단독 개발</div>
+          <div class="project-desc">
+            신분증/카드 인식 모델의 정확도 극대화 및 모바일 탑재를 위한 경량화. Detection 모델 설계·개발·배포 전 과정 단독 수행. 분류 클래스 8→11종 확장 시 성능 하락을 Area Attention + Linear Attention 아키텍처 재설계로 극복.
+          </div>
+          <div class="project-metrics">
+            <span class="metric">정확도 98.9%</span>
+            <span class="metric">ROI Score 0.9635</span>
+            <span class="metric">추론 속도 20% 향상</span>
+            <span class="metric">매출 60억 기여</span>
+            <span class="metric">특허 등록</span>
+          </div>
+          <div class="project-stack">
+            <span class="tag">PyTorch</span><span class="tag">OpenCV</span><span class="tag">ViT</span><span class="tag">Area Attention</span><span class="tag">Linear Attention</span><span class="tag">ONNX</span>
+          </div>
         </div>
-        <div class="project-metrics">
-          <span class="metric">정확도 98.9%</span>
-          <span class="metric">ROI Score 0.9635</span>
-          <span class="metric">추론 속도 20% 향상</span>
-          <span class="metric">매출 60억 기여</span>
-        </div>
-        <div class="project-stack">
-          <span class="tag">PyTorch</span>
-          <span class="tag">OpenCV</span>
-          <span class="tag">ViT</span>
-          <span class="tag">Area Attention</span>
-          <span class="tag">ONNX</span>
+        <div class="problems-section">
+          <div class="problems-title">// 문제 해결 과정</div>
+
+          <div class="problem-item">
+            <div class="problem-label">On-Device 환경의 물리적 한계</div>
+            <div class="problem-body">제한된 모바일 리소스로 고성능 모델 적용이 어렵고, 고해상도 이미지 처리 시 추론 속도가 저하되었습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              1MB 이하 Mobile-friendly 아키텍처(SE-Module 포함) 설계. 입력 이미지 180×180으로 최적화. Attention 메커니즘 도입으로 경량화 시 성능 손실 최소화.
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure" style="flex:1">
+                  <img src="images/se_module.png" alt="SE Module" loading="lazy" style="border-radius:8px;border:1px solid var(--border);width:100%"/>
+                  <div class="img-caption">SE-Module 구조: 채널별 중요도 가중치 학습</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">기존 Detection 파이프라인의 비효율</div>
+            <div class="problem-body">카드 위치 탐지와 회전 보정을 별개의 단계로 처리하여 추론이 느리고 연산 비용이 과다했습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              출력 이미지를 3채널(카드 마스킹, Title 마스킹, 꼭지점 마스킹)로 구성하여 위치 탐지와 회전 예측을 하나의 추론 과정으로 통합. 추론 속도 20% 향상.
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-full" style="flex:1">
+                  <img src="images/detection_flow.png" alt="Detection Flow" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">전체 Detection Flow: 입력 → 탐지 → 3채널 Output</div>
+                </div>
+              </div>
+              <div class="img-row" style="margin-top:0.8rem">
+                <div class="img-figure" style="flex:1">
+                  <img src="images/detection_output.png" alt="3채널 Output 예시" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">3채널 Output 예시: 1채널(카드 마스크) / 2채널(Title) / 3채널(꼭지점)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">데이터 부족으로 인한 낮은 일반화 성능</div>
+            <div class="problem-body">실제 환경(조명, 각도, 배경)을 반영한 학습 데이터가 부족하여 특정 조건에서 탐지 실패율이 높았습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              16만여 장 전수 데이터 분포 분석(Contrast/Saturation/Blur/AreaRatio 갭 발견)으로 Augmentation 재설계. Random Color Augmentation과 가상 데이터 생성으로 클래스 불균형 해소.
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-small">
+                  <img src="images/aug_card1.png" alt="Augmentation 예시 1" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">신분증 Augmentation</div>
+                </div>
+                <div class="img-figure img-small">
+                  <img src="images/aug_card2.png" alt="Augmentation 예시 2" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">신용카드 Augmentation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">개별 모델 처리로 인한 중복 연산</div>
+            <div class="problem-body">ROI 탐지와 카드 종류 분류를 각각 다른 모델로 처리하며 시스템 비효율이 발생했습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">Multi-task Learning으로 ROI 탐지(Regression)와 카드 분류(Classification)를 하나의 모델에서 동시 학습.</div>
+          </div>
         </div>
       </div>
 
+      <!-- QUASAR -->
       <div class="project-card">
-        <div class="project-name">QUASAR: AI 프로필 생성 앱 개발</div>
-        <div class="project-period">2024.02 — 2025.10</div>
-        <div class="project-desc">
-          사용자 사진 3~5장으로 고품질 AI 프로필을 자동 생성하는 서비스의 핵심 생성 모델을 단독 개발.
-          Mean Face + Frontalization 기법으로 입력 각도와 무관하게 아이덴티티 일관성 확보.
-          안경 제거 모델 및 프롬프트 엔지니어링으로 결과물 품질 편차 최소화, 알파 버전 출시.
+        <div class="project-card-header">
+          <div class="project-name">QUASAR: AI 프로필 생성 앱 개발</div>
+          <div class="project-period">2024.02 — 2025.10 · 단독 개발</div>
+          <div class="project-desc">
+            사용자 사진 3~5장으로 고품질 AI 프로필을 자동 생성하는 서비스의 핵심 생성 모델을 단독 개발. Mean Face + Frontalization 기법으로 입력 각도와 무관하게 아이덴티티 일관성 확보. 알파 버전 출시.
+          </div>
+          <div class="project-stack">
+            <span class="tag">Stable Diffusion XL</span><span class="tag">LoRA</span><span class="tag">PyTorch</span>
+          </div>
         </div>
-        <div class="project-stack">
-          <span class="tag">Stable Diffusion XL</span>
-          <span class="tag">LoRA</span>
-          <span class="tag">PyTorch</span>
+        <div class="problems-section">
+          <div class="problems-title">// 문제 해결 과정</div>
+
+          <div class="problem-item">
+            <div class="problem-label">입력 이미지의 각도와 포즈 불일치</div>
+            <div class="problem-body">측면, 반측면 등 다양한 각도의 셀카 입력 시 결과물의 일관성이 깨지는 문제가 있었습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              Mean Face(평균 얼굴) 생성으로 입력 이미지 전체의 특징을 통합. Frontalization(정면화) 기법 적용으로 입력 각도와 무관하게 일관된 정면 구도 확보.
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-small">
+                  <img src="images/mean_face.png" alt="Mean Face" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">Mean Face 생성 결과</div>
+                </div>
+                <div class="img-figure img-small">
+                  <img src="images/generated_face.png" alt="Generated Face" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">최종 생성 이미지</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">안경 착용으로 인한 이미지 왜곡</div>
+            <div class="problem-body">안경 쓴 이미지가 포함될 경우 Mean Face 생성 시 눈 주변이 어두워지거나 왜곡되는 현상이 발생했습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">안경 착용 이미지에 사전 안경 제거 모델을 선별적으로 적용하여 안경과 그림자 제거. 왜곡 없는 평균 얼굴 생성.</div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-small">
+                  <img src="images/glasses_before.png" alt="안경 착용 전" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">안경 착용 시</div>
+                </div>
+                <div class="img-figure img-small">
+                  <img src="images/glasses_after.png" alt="안경 제거 후" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">안경 제거 모델 적용 후</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">생성 이미지의 품질 및 스타일 최적화</div>
+            <div class="problem-body">사용자 정체성을 유지하면서 자연스러운 증명사진 스타일을 구현할 최적의 프롬프트 조합이 부재했습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">다양한 프롬프트를 체계적으로 실험하고 조합하여 고품질 결과물을 일관되게 생성하는 프롬프트 엔지니어링 방법론 확립.</div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-small">
+                  <img src="images/prompt_before.png" alt="프롬프트 최적화 전" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">프롬프트 최적화 전</div>
+                </div>
+                <div class="img-figure img-small">
+                  <img src="images/prompt_after.png" alt="프롬프트 최적화 후" loading="lazy" style="border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">프롬프트 최적화 후</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">최종 생성 결과</div>
+            <div class="problem-body"></div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-full" style="flex:1">
+                  <img src="images/quasar_results.png" alt="QUASAR 결과" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">QUASAR 생성 결과 — 다양한 사용자의 AI 프로필 이미지</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
 
+  <!-- Asan -->
   <div class="exp-item">
     <div class="exp-meta">
       <div class="exp-company">아산병원<br>울산대 의과대학</div>
@@ -714,20 +487,69 @@
     </div>
     <div class="exp-projects">
       <div class="project-card">
-        <div class="project-name">생체 신호 기반 AI 예측 모델 개발</div>
-        <div class="project-period">2021.07 — 2022.01</div>
-        <div class="project-desc">
-          수술 중 ABP 신호를 분석하여 SVV를 예측하는 AI 모델 단독 개발.
-          수술실 직접 방문 및 담당 의사 자문으로 노이즈 원인 분석 후 독자적 클렌징 알고리즘 설계.
-          1차원 시계열 데이터를 3채널로 변환하고 Separable Convolution을 적용하여 제한 데이터 환경에서 학습 효율 극대화.
+        <div class="project-card-header">
+          <div class="project-name">생체 신호 기반 AI 예측 모델 개발</div>
+          <div class="project-period">2021.07 — 2022.01 · 단독 개발</div>
+          <div class="project-desc">
+            수술 중 ABP 신호를 분석하여 SVV를 예측하는 AI 모델 단독 개발. 수술실 직접 방문 및 담당 의사 자문으로 노이즈 원인 분석. 1D 시계열을 3채널로 변환하고 Separable Convolution 적용으로 제한 데이터 환경에서 학습 효율 극대화.
+          </div>
+          <div class="project-metrics">
+            <span class="metric">MSE 51.6% 감소 (20.25 → 9.8)</span>
+            <span class="metric">데이터 손실률 15% 절감</span>
+          </div>
+          <div class="project-stack">
+            <span class="tag">PyTorch</span><span class="tag">Signal Processing</span><span class="tag">CNN</span><span class="tag">Separable Convolution</span>
+          </div>
         </div>
-        <div class="project-metrics">
-          <span class="metric">예측 오차(MSE) 51.6% 감소</span>
-        </div>
-        <div class="project-stack">
-          <span class="tag">PyTorch</span>
-          <span class="tag">Signal Processing</span>
-          <span class="tag">CNN</span>
+        <div class="problems-section">
+          <div class="problems-title">// 문제 해결 과정</div>
+
+          <div class="problem-item">
+            <div class="problem-label">의료 현장의 복합적인 데이터 노이즈</div>
+            <div class="problem-body">수술 중 발생하는 기계 소음 등 불규칙한 노이즈가 생체 신호에 혼입되어 모델의 학습 정확도를 저하시켰습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              수술실 직접 방문 및 의료진 협업으로 노이즈 특성 파악. ABP 신호의 변화율(Gradient)을 분석하여 이상치를 탐지하고 임계값(Threshold) 기반 독자적 클렌징 알고리즘 설계.
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure" style="flex:1">
+                  <img src="images/signal_before.png" alt="노이즈 제거 전" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">노이즈 제거 전 ABP 신호</div>
+                </div>
+              </div>
+              <div class="img-row" style="margin-top:0.6rem">
+                <div class="img-figure" style="flex:1">
+                  <img src="images/signal_after.png" alt="노이즈 제거 후" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">노이즈 제거 후 ABP 신호</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">1차원 데이터 구조의 정보 표현 한계</div>
+            <div class="problem-body">1D 시계열 데이터만으로는 생체 신호의 복합적인 시간적·주파수적 특징을 모두 반영하기 어려웠습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">
+              1D ABP 신호에 미분값(Gradient)과 주파수(FFT) 정보를 추가하여 3채널 데이터로 변환. Separable Convolution 도입으로 경량화와 성능 최적화 동시 달성.
+            </div>
+            <div class="img-block">
+              <div class="img-row">
+                <div class="img-figure img-full" style="flex:1">
+                  <img src="images/model_architecture.png" alt="Model Architecture" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border)"/>
+                  <div class="img-caption">SVV Estimation Model 전체 아키텍처: 3채널 변환 → CNN → 예측</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-label">학습 데이터 부족으로 인한 낮은 일반화 성능</div>
+            <div class="problem-body">제한된 환자 데이터로 인해 특정 케이스에 과적합될 우려가 있었습니다.</div>
+            <div class="solution-label">→ SOLUTION</div>
+            <div class="solution-body">Noise Injection 및 Sliding Window(2초 step, 10초 window) 기법으로 한정된 데이터에서 학습 데이터셋의 양과 다양성 확보.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -754,7 +576,7 @@
       <div class="award-icon">🏆</div>
       <div class="award-content">
         <div class="award-title">우수 논문상</div>
-        <div class="award-sub">2019 한국 인터넷정보학회 추계학술발표대회</div>
+        <div class="award-sub">2019 한국 인터넷정보학회 추계학술발표대회, 제1저자</div>
       </div>
       <div class="award-year">2019</div>
     </div>
@@ -762,7 +584,7 @@
       <div class="award-icon">🔒</div>
       <div class="award-content">
         <div class="award-title">특허 등록 — 타겟 이미지를 식별하는 방법 및 장치</div>
-        <div class="award-sub">등록번호: 제10-2837662호</div>
+        <div class="award-sub">등록번호: 제10-2837662호 · 다중 채널 이미지 기반 ROI 식별 기술. OCR 정확도 3.21%p 향상 및 매출 60억 기여.</div>
       </div>
       <div class="award-year">2025.07</div>
     </div>
@@ -770,7 +592,7 @@
       <div class="award-icon">📝</div>
       <div class="award-content">
         <div class="award-title">특허 출원 — 합성 문서 생성 방법 및 시스템</div>
-        <div class="award-sub">출원번호: 10-2026-0032723</div>
+        <div class="award-sub">출원번호: 10-2026-0032723 · 비정형 문서 레이아웃/문맥 보존 합성 데이터 생성 파이프라인. VLM F1 +0.16 기여.</div>
       </div>
       <div class="award-year">2026.02</div>
     </div>
@@ -788,32 +610,38 @@
     <div class="activity-card">
       <div class="activity-type">MENTORING</div>
       <div class="activity-title">코드잇 AI 엔지니어 5기 멘토</div>
+      <div class="activity-sub">AI 엔지니어 트랙 학습자 대상 코드 리뷰, 모델 설계 피드백 등 실무 중심 멘토링.</div>
       <div class="activity-period">2025.08 — 2026.03</div>
     </div>
     <div class="activity-card">
       <div class="activity-type">MENTORING</div>
       <div class="activity-title">코드잇 AI 엔지니어 12기 멘토</div>
+      <div class="activity-sub">AI 엔지니어 트랙 학습자 대상 멘토링.</div>
       <div class="activity-period">2026.04 — 2026.11</div>
     </div>
     <div class="activity-card">
       <div class="activity-type">MENTORING</div>
       <div class="activity-title">경기대학교 캡스톤프로젝트 멘토</div>
-      <div class="activity-period">2026년 1학기 (산학협력 전문가)</div>
+      <div class="activity-sub">산학협력 전문가로 참여.</div>
+      <div class="activity-period">2026년 1학기</div>
+    </div>
+    <div class="activity-card">
+      <div class="activity-type">COMMUNITY</div>
+      <div class="activity-title">딥러닝 논문 읽기 모임 3기 발표자</div>
+      <div class="activity-sub">이미지 처리 분야 최신 GAN 논문 매주 분석 및 발표.</div>
+      <div class="activity-period">2021.03 — 2021.12</div>
     </div>
     <div class="activity-card">
       <div class="activity-type">EDUCATION</div>
       <div class="activity-title">Naver Boostcamp AI Tech</div>
-      <div class="activity-period">2021.01 — 2021.06 수료</div>
-    </div>
-    <div class="activity-card">
-      <div class="activity-type">EDUCATION</div>
-      <div class="activity-title">KB 국민은행 IT Academy</div>
-      <div class="activity-period">2022.03 — 2022.05 수료</div>
+      <div class="activity-sub">Computer Vision 핵심 분야 심층 학습 및 실전 모델링 경험.</div>
+      <div class="activity-period">2021.01 — 2021.06</div>
     </div>
     <div class="activity-card">
       <div class="activity-type">EDUCATION</div>
       <div class="activity-title">경기대학교 컴퓨터과학과</div>
-      <div class="activity-period">2015.03 — 2021.02 학사</div>
+      <div class="activity-sub">학사 졸업 · RTOS 연구실 2년 의료 영상 AI 연구.</div>
+      <div class="activity-period">2015.03 — 2021.02</div>
     </div>
   </div>
 </section>
@@ -828,9 +656,7 @@
   </div>
 </div>
 
-<footer>
-  © 2026 김상현 · Built with HTML/CSS
-</footer>
+<footer>© 2026 김상현 · Built with HTML/CSS</footer>
 
 </body>
 </html>
