@@ -388,8 +388,6 @@
           <div class="project-period">2025.10 — 현재 · 3인 팀 · VLM 파인튜닝 및 추론 최적화 주도</div>
           <ul class="project-summary">
             <li>비정형 행정·금융 문서에서 핵심 정보를 추출하는 End-to-End KIE 솔루션 개발</li>
-            <li>PaddleOCR 검토 결과 Bounding Box 좌표 출력 미지원 확인 → VLM 방식 채택</li>
-            <li>Qwen3-VL 선정: bbox 좌표 출력 지원 + 당시 최신 수준의 성능</li>
             <li>실제 문서 수집 불가(개인정보 이슈) → 합성 데이터 자동 생성 파이프라인 독자 개발 및 특허 출원</li>
           </ul>
           <div class="project-metrics">
@@ -430,16 +428,6 @@
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">기존 OCR의 문맥 이해 부족 — Key-Value 관계 파악 불가</div>
-            <div class="ps-context">단순 OCR은 텍스트 위치만 찾을 뿐, '발급 일자인지 만료 일자인지' 같은 의미론적 관계를 이해하지 못함</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>Qwen3-VL-8B 도입 → Bounding Box 좌표와 텍스트 의미(Key)를 한 번의 추론으로 추출</li>
-              <li>DeepSpeed ZeRO-3 + Flash Attention 2로 멀티 GPU 학습 환경 구성</li>
-            </ul>
-          </div>
-
-          <div class="ps-item">
             <div class="ps-problem">8B 모델의 높은 메모리 사용량과 느린 추론</div>
             <div class="ps-context">단일 GPU 환경에서 실시간 추론이 가능해야 했으나, 모델 크기가 이를 제약</div>
             <div class="ps-sol-label">→ SOLUTION</div>
@@ -472,7 +460,7 @@
             <li>클래스 8→11종 확장 시 ROI Score 하락 → 데이터 분포 분석 기반 Augmentation 재설계 + Area·Linear Attention 아키텍처 개선으로 극복</li>
           </ul>
           <div class="project-metrics">
-            <span class="metric">정확도 98.9%</span>
+            <span class="metric">End-to-End 정확도 98.9%</span>
             <span class="metric">ROI Score 0.9635</span>
             <span class="metric">추론 속도 20% 향상</span>
             <span class="metric">특허 등록</span>
@@ -503,7 +491,7 @@
                 </div>
               </div>
               <div class="img-row" style="margin-top:0.6rem;">
-                <div class="img-figure wide">
+                <div class="img-figure tall">
                   <img src="images/detection_output.png" alt="3채널 Output" loading="lazy" />
                   <div class="img-caption">3채널 Output: 카드 마스크 / 타이틀·회전 / 꼭지점</div>
                 </div>
@@ -557,8 +545,6 @@
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
               <li>ViT 기반 아키텍처로 전환 + Area·Linear Attention 조합 설계</li>
-              <li>Area Attention: 행·열 단위 지역 패턴을 효율적으로 학습 (O(W²) per row/col)</li>
-              <li>Linear Attention: ELU kernel 기반 O(N·d²) 복잡도로 전역 문맥 포착 (softmax 대비 ~186× 경량)</li>
               <li>Loss 전면 재설계: MSE+CE → OHEM+Focal+Dice+IoU+DT Boundary Loss</li>
               <li>LossWeightScheduler + ModelEMA 도입 → ROI Score 0.9635 회복</li>
             </ul>
@@ -664,7 +650,6 @@
 
           <div class="ps-item">
             <div class="ps-problem">최종 생성 결과</div>
-            <div class="ps-context"></div>
             <div class="img-block" style="margin-top:0.5rem;">
               <div class="img-row">
                 <div class="img-figure wide">
@@ -696,7 +681,7 @@
             <li>수술 중 ABP(동맥혈압) 신호로 SVV(일회박출량변이)를 예측하는 AI 모델 단독 개발</li>
             <li>수술실 직접 참관 + 담당 의사 협업으로 노이즈 원인 분석 → 독자적 클렌징 알고리즘 설계</li>
             <li>LSTM에서 CNN으로 전환: ABP 신호의 국소 파형 패턴 추출에 CNN이 적합하다 판단</li>
-            <li>1D → 3채널 변환(원본 ABP / Slope dP/dt / FFT) + Sliding Window로 학습 데이터 확보</li>
+            <li>1D → 3채널 변환(원본 ABP / Slope / FFT) + Sliding Window로 학습 데이터 확보</li>
           </ul>
           <div class="project-metrics">
             <span class="metric">MSE 51.6% 감소 (20.25 → 9.8)</span>
