@@ -310,7 +310,7 @@
   <h1 class="hero-name">김상현<span>.</span></h1>
   <div class="hero-title">Computer Vision · VLM · Model Optimization</div>
   <p class="hero-desc">
-    Computer Vision과 VLM을 아우르는 Vision AI 엔지니어.<br>
+    신분증·문서 도메인에서 Detection부터 VLM까지 다룬 Vision AI 엔지니어.<br>
     모델 구조 설계부터 경량화·추론 최적화까지 End-to-End 경험 보유.
   </p>
   <div class="hero-links">
@@ -385,33 +385,34 @@
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-name">VLM 기반 문서 인식 솔루션 개발</div>
-          <div class="project-period">2025.10 — 현재 · 3인 팀 · VLM 파인튜닝 및 추론 최적화 주도</div>
+          <div class="project-period">2025.10 — 현재 · 3인 팀 · 모델 선정·데이터 파이프라인·추론 최적화 주도</div>
           <ul class="project-summary">
-            <li>비정형 행정·금융 문서에서 핵심 정보를 추출하는 End-to-End KIE 솔루션 개발</li>
-            <li>실제 문서 수집 불가(개인정보 이슈) → 합성 데이터 자동 생성 파이프라인 독자 개발 및 특허 출원</li>
+            <li>비정형 행정·금융 문서에서 레이아웃과 문맥을 해석하는 KIE 모델 개발</li>
+            <li>bbox 좌표 출력 요건과 문맥 이해를 동시 만족하는 VLM 접근 채택, Qwen3-VL을 베이스로 선정</li>
           </ul>
           <div class="project-metrics">
             <span class="metric">F1 Score 0.91 (+0.16 vs Zero-shot)</span>
-            <span class="metric">AWQ/FP8 F1 delta -0.0002</span>
+            <span class="metric">AWQ/FP8 F1 -0.0002</span>
             <span class="metric">특허 출원</span>
           </div>
           <div class="project-stack">
             <span class="tag">Qwen3-VL</span><span class="tag">vLLM</span>
-            <span class="tag">AWQ / FP8</span><span class="tag">DeepSpeed ZeRO-3</span>
-            <span class="tag">Flash Attention 2</span><span class="tag">HuggingFace</span>
+            <span class="tag">AWQ / FP8</span><span class="tag">HuggingFace</span>
           </div>
         </div>
         <div class="ps-section">
           <div class="ps-title">// PROBLEM & SOLUTION</div>
 
           <div class="ps-item">
-            <div class="ps-problem">학습 데이터 부재 — 개인정보 이슈로 실제 문서 수집 불가</div>
-            <div class="ps-context">행정·금융 문서는 개인정보를 포함하고 있어 리얼 데이터 수집이 구조적으로 불가능한 환경</div>
+            <div class="ps-problem">금융 문서 보안 이슈로 실데이터 확보 불가</div>
+            <div class="ps-context">주 고객사가 금융사라 실제 문서 데이터를 확보할 수 없는 환경. 이대로면 파인튜닝 자체가 막힘. 학술 벤치마크(OmniDocBench)는 우리 KPI가 아니었고, 진짜 목표는 금융·공적 문서 도메인 최적화.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>실제 문서의 레이아웃·폰트 분포를 분석하여 Python 기반 문서 생성 엔진 자체 개발</li>
-              <li>인쇄 노이즈, 기울기, 도장 겹침 등 엣지 케이스 포함한 합성 데이터 생성 파이프라인 구축</li>
-              <li>해당 파이프라인 특허 출원 (10-2026-0032723)</li>
+              <li>템플릿 직접 사용은 한계가 있어 LLM(GPT)으로 HTML을 생성하고 렌더링하는 방식으로 우회</li>
+              <li>HTML 단계에서 텍스트를 자유롭게 주입, 렌더링 후 Perspective·밝기·그림자 augmentation 적용</li>
+              <li>Key 위치에 학습이 의존하지 않도록 Key shuffle 추가</li>
+              <li>소규모 인하우스 데이터로 검증한 뒤 합성 데이터로 확장하는 전략으로 F1 0.91 달성 (Zero-shot 대비 +0.16)</li>
+              <li>해당 파이프라인은 특허 출원 (10-2026-0032723)</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -428,22 +429,13 @@
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">8B 모델의 높은 메모리 사용량과 느린 추론</div>
-            <div class="ps-context">단일 GPU 환경에서 실시간 추론이 가능해야 했으나, 모델 크기가 이를 제약</div>
+            <div class="ps-problem">8B 모델 서비스 적용 — 추론 속도와 메모리 점유율</div>
+            <div class="ps-context">단일 GPU 환경에서 실시간 추론이 가능해야 했으나, 8B 모델 크기가 제약</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>AWQ / FP8 양자화 적용 → F1 delta -0.0002 수준의 손실로 메모리 절감</li>
-              <li>vLLM PagedAttention 도입 → A6000 GPU 1장에서 실시간 추론 가능</li>
-            </ul>
-          </div>
-
-          <div class="ps-item">
-            <div class="ps-problem">생성형 모델의 출력 불안정성 — Hallucination 및 포맷 오류</div>
-            <div class="ps-context">결과 포맷이 깨지거나 존재하지 않는 정보를 생성하는 환각 현상 발생 위험</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>모델 출력을 정해진 JSON 스키마에 매핑하는 후처리 Parser 구현</li>
-              <li>Constraint Decoding으로 필요 필드 추출 여부 검증 → 데이터 정합성 확보</li>
+              <li>AWQ/FP8 양자화 적용 → F1 -0.0002 수준의 손실로 메모리 점유율 개선</li>
+              <li>vLLM 도입 → 단일 GPU 실시간 추론 가능</li>
+              <li>출력 안정화를 위해 JSON 스키마 기반 파싱 + 프롬프트 보강으로 hallucination 최소화</li>
             </ul>
           </div>
         </div>
@@ -453,14 +445,13 @@
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-name">카드/신분증 Detection 모델 개발 및 상용화</div>
-          <div class="project-period">2023.05 — 현재 · 단독 개발 · 설계·개발·배포·성능 개선 전 과정 담당</div>
+          <div class="project-period">2023.05 — 현재 · 단독 개발 · 설계·개발·배포 전 과정 담당</div>
           <ul class="project-summary">
-            <li>On-Device 신분증·카드 인식용 Detection 모델 설계·개발·배포 전 과정 단독 수행</li>
-            <li>기존 CV 기반 방식은 회전 정보 추출 불가 → 0/90/180/270도 4회 추론 필요 → 딥러닝 1-Stage 구조로 전환</li>
-            <li>클래스 8→11종 확장 시 ROI Score 하락 → 데이터 분포 분석 기반 Augmentation 재설계 + Area·Linear Attention 아키텍처 개선으로 극복</li>
+            <li>모바일/서버 환경에서 신분증·카드를 인식하는 ROI Detection 모델 단독 개발 및 상용화</li>
+            <li>정확도 98.9%, 금융권 주요 고객사 도입으로 매출 60억 원 규모 사업 성장</li>
           </ul>
           <div class="project-metrics">
-            <span class="metric">End-to-End 정확도 98.9%</span>
+            <span class="metric">정확도 98.9%</span>
             <span class="metric">ROI Score 0.9635</span>
             <span class="metric">추론 속도 20% 향상</span>
             <span class="metric">특허 등록</span>
@@ -475,13 +466,16 @@
           <div class="ps-title">// PROBLEM & SOLUTION</div>
 
           <div class="ps-item">
-            <div class="ps-problem">기존 CV 기반 파이프라인의 구조적 비효율</div>
-            <div class="ps-context">회전 정보를 직접 추출하지 못해 0/90/180/270도를 각각 추론하는 4회 반복 구조 → 레이턴시·연산 낭비</div>
+            <div class="ps-problem">기존 OpenCV 파이프라인의 한계 — 서버 인입 영역</div>
+            <div class="ps-context">기존 OpenCV 파이프라인은 클라이언트 가이드박스 환경에서는 동작했지만, 서버로 인입되는 자유 위치/크기 이미지에는 한계. 회전 정보를 알 수 없어 0/90/180/270도를 모두 추론하는 구조였고, 카드 위아래 방향도 별도 분석 필요.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>3채널 출력 설계: 카드 마스크(ch0) · 타이틀·회전 정보(ch1) · 꼭지점 키포인트(ch2)</li>
-              <li>위치 탐지와 회전 예측을 하나의 추론으로 통합 → 추론 속도 20% 향상</li>
-              <li>ONNX 4스레드 기준 100ms 이하, ~1.1MB 모바일 친화적 모델 배포</li>
+              <li>위치·회전 정보를 동시 출력하는 단일 딥러닝 모델로 전환 (1-Stage)</li>
+              <li>3채널 출력 설계: 카드 마스크(ch0) · 타이틀 영역(ch1) · 꼭지점 키포인트(ch2)</li>
+              <li>박스·회전·꼭지점을 단일 추론으로 처리해 추론 속도 20% 향상</li>
+              <li>저가형 안드로이드 ONNX 4스레드 환경에서 100ms 이하 유지, ~1.1MB 모바일 탑재</li>
+              <li>SE-Module 등 Mobile-friendly 컴포넌트 적용으로 경량화와 정확도 동시 확보</li>
+              <li>해당 구조 특허 등록 (제10-2837662호)</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -500,30 +494,15 @@
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">On-Device 리소스 제약 — 1MB 이하 경량화와 정확도 유지</div>
-            <div class="ps-context">모바일 배포 요건상 1MB 이하 모델 크기 필요 → 단순 경량화 시 특징 추출 능력 저하</div>
+            <div class="ps-problem">클래스 확장(8→11종) 후 ROI Score 하락</div>
+            <div class="ps-context">여권(국내/해외 분리), 신용카드, Unknown 추가로 비즈니스 확장성 확보가 필요했지만, 라벨링 구조 자체가 학습이 어려운 환경. 신용카드는 타이틀이 없고, Unknown은 공백, 여권은 분리까지 필요. 동일 모델/데이터로 학습 시 ROI Score 0.9633 → 0.9410 하락.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>SE-Module 포함 Mobile-friendly 아키텍처 자체 설계 → 경량화 시 성능 손실 최소화</li>
-              <li>입력 이미지 180×180 최적화 + Attention 메커니즘 도입으로 중요 특징 집중</li>
-            </ul>
-            <div class="img-block">
-              <div class="img-row" style="margin-top:0.8rem;">
-                <div class="img-figure wide">
-                  <img src="images/se_module.png" alt="SE Module" loading="lazy" />
-                  <div class="img-caption">SE-Module: 채널별 중요도 가중치 학습</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="ps-item">
-            <div class="ps-problem">학습·평가 데이터 분포 불일치 — 실환경 일반화 저하</div>
-            <div class="ps-context">16만여 장 전수 분석 결과 Contrast, Saturation, Blur, AreaRatio 등 통계적 갭 확인 → 특정 조건 탐지 실패율 높음</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>갭의 주요 원인은 Saturation(2배 이상 차이) → 보정 방향으로 Augmentation 파이프라인 재설계</li>
-              <li>Random Color Augmentation + 가상 데이터 생성으로 클래스 불균형 해소</li>
+              <li>원인 분석: CNN의 지역적 특성상 엣지는 잘 잡지만 classification이 약함</li>
+              <li>1차 시도로 CNN에 Area Attention 적용했지만 개선 폭이 작아 ViT 백본으로 전환</li>
+              <li>16만여 장 전수 분석으로 Train-Eval 분포 갭 확인 (Saturation 2배 차이, Contrast/Blur 등) → Augmentation 재설계</li>
+              <li>Loss 전면 재설계: MSE+CE → OHEM+Focal+Dice+IoU+DT Boundary Loss + LossWeightScheduler</li>
+              <li>Linear+Area Attention 조합으로 ROI Score 0.9635 달성 (확장 전 최고치 0.9633 초과)</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -536,28 +515,13 @@
                   <div class="img-caption">신용카드 Augmentation</div>
                 </div>
               </div>
+              <div class="img-row" style="margin-top:0.6rem;">
+                <div class="img-figure wide">
+                  <img src="images/se_module.png" alt="SE Module" loading="lazy" />
+                  <div class="img-caption">SE-Module: 채널별 중요도 가중치 학습</div>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div class="ps-item">
-            <div class="ps-problem">클래스 확장(8→11종) 후 ROI Score 하락</div>
-            <div class="ps-context">8클래스 CNN 0.9633 → 11클래스 확장 후 0.9410으로 하락 → 기존 아키텍처로 증가한 클래스 다양성 수용 한계</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>ViT 기반 아키텍처로 전환 + Area·Linear Attention 조합 설계</li>
-              <li>Loss 전면 재설계: MSE+CE → OHEM+Focal+Dice+IoU+DT Boundary Loss</li>
-              <li>LossWeightScheduler + ModelEMA 도입 → ROI Score 0.9635 회복</li>
-            </ul>
-          </div>
-
-          <div class="ps-item">
-            <div class="ps-problem">ROI 탐지·카드 분류 중복 연산</div>
-            <div class="ps-context">Regression(ROI 탐지)과 Classification(카드 종류)을 별도 모델로 처리 → 불필요한 중복 연산 발생</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>Multi-task Learning 구조로 두 과업을 하나의 모델에서 동시 학습·예측</li>
-              <li>Seg-Guided Masked Pool: 카드 마스크 채널을 분류 헤드의 공간 어텐션 가중치로 활용 → 두 태스크 상호 보완</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -568,10 +532,8 @@
           <div class="project-name">QUASAR: AI 프로필 생성 앱 개발</div>
           <div class="project-period">2024.02 — 2025.10 · 단독 개발 · 알파 버전 출시</div>
           <ul class="project-summary">
-            <li>사용자 사진 3~5장으로 고품질 AI 프로필을 자동 생성하는 서비스의 핵심 생성 모델 단독 개발</li>
-            <li>SDXL 기반 LoRA 파인튜닝(약 15분 학습)으로 사용자 아이덴티티 학습</li>
-            <li>Mean Face + Frontalization으로 다양한 각도의 입력 이미지를 정규화하여 결과 일관성 확보</li>
-            <li>알파 버전 출시 완료</li>
+            <li>사용자 사진 3~5장으로 AI 프로필을 자동 생성하는 서비스의 핵심 생성 모델 개발 및 알파 출시</li>
+            <li>Stable Diffusion XL + LoRA 파인튜닝(약 15분 학습)으로 사용자 아이덴티티 학습</li>
           </ul>
           <div class="project-stack">
             <span class="tag">Stable Diffusion XL</span>
@@ -583,12 +545,13 @@
           <div class="ps-title">// PROBLEM & SOLUTION</div>
 
           <div class="ps-item">
-            <div class="ps-problem">입력 각도 불일치 — 측면·반측면 입력 시 결과 품질 저하</div>
-            <div class="ps-context">다양한 각도의 셀카 입력 시 생성 결과의 일관성이 깨지는 문제</div>
+            <div class="ps-problem">입력 각도/조명 편차로 인한 아이덴티티 불안정</div>
+            <div class="ps-context">사용자 사진 3~5장 입력 시 각도와 조명 차이로 동일인 학습이 어려움. 다양한 입력을 그대로 학습에 사용하면 아이덴티티가 흔들림.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>Delaunay 삼각분할 기반 Mean Face(평균 얼굴) 생성 → 입력 이미지 전체 특징 통합</li>
-              <li>Frontalization(정면화) 적용 → 입력 각도와 무관하게 일관된 정면 구도 확보</li>
+              <li>Face landmark 4점(양쪽 눈끝 + 입 양쪽끝) 정렬 기반 Mean Face 생성</li>
+              <li>Frontalization으로 정면 기준 정규화, 입력 각도와 무관하게 일관된 학습 입력 확보</li>
+              <li>실험 결과 Mean Face/Frontalization만 쓰는 것보다 원본도 함께 학습 데이터에 포함했을 때 아이덴티티 반영도가 더 좋아 최종적으로 함께 사용</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -605,12 +568,12 @@
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">안경 착용 이미지로 인한 Mean Face 왜곡</div>
-            <div class="ps-context">안경 프레임을 얼굴의 일부로 오인 → 눈 주변 어두워지거나 왜곡되는 아티팩트 발생</div>
+            <div class="ps-problem">안경 착용 입력 시 콧등 아티팩트 발생</div>
+            <div class="ps-context">안경을 쓴 입력 이미지가 들어오면 생성 결과물의 콧등에 검정 자국 형태의 아티팩트가 반복적으로 발생</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>안경 감지 모델로 착용 여부 판별 → 착용 이미지에만 선별적으로 안경 제거 모델 적용</li>
-              <li>불필요한 전처리 없이 왜곡 없는 평균 얼굴 생성</li>
+              <li>안경 감지 모델로 착용 여부 판별 → 착용 이미지에만 선별적으로 안경 제거 모델 적용 (오픈소스 모델 활용)</li>
+              <li>학습 전처리 단계에 통합해 아티팩트 문제 해결</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -621,28 +584,6 @@
                 <div class="img-figure">
                   <img src="images/glasses_after.png" alt="안경 제거 후" loading="lazy" />
                   <div class="img-caption">안경 제거 모델 적용 후</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="ps-item">
-            <div class="ps-problem">정량 지표 없는 품질 개선 — Prompt Engineering</div>
-            <div class="ps-context">생성 이미지 품질은 사람마다 기준이 달라 정량 측정이 어려운 환경에서 일관된 고품질 결과 확보 필요</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>다양한 프롬프트를 체계적으로 실험·조합 → 고품질 결과를 일관되게 생성하는 방법론 확립</li>
-              <li>성별·의상 조건별 프롬프트 세분화 → 결과 품질 편차 최소화</li>
-            </ul>
-            <div class="img-block">
-              <div class="img-row" style="margin-top:0.8rem;">
-                <div class="img-figure">
-                  <img src="images/prompt_before.png" alt="최적화 전" loading="lazy" />
-                  <div class="img-caption">프롬프트 최적화 전</div>
-                </div>
-                <div class="img-figure">
-                  <img src="images/prompt_after.png" alt="최적화 후" loading="lazy" />
-                  <div class="img-caption">프롬프트 최적화 후</div>
                 </div>
               </div>
             </div>
@@ -678,14 +619,11 @@
           <div class="project-name">생체 신호 기반 AI 예측 모델 개발</div>
           <div class="project-period">2021.07 — 2022.01 · 단독 개발</div>
           <ul class="project-summary">
-            <li>수술 중 ABP(동맥혈압) 신호로 SVV(일회박출량변이)를 예측하는 AI 모델 단독 개발</li>
-            <li>수술실 직접 참관 + 담당 의사 협업으로 노이즈 원인 분석 → 독자적 클렌징 알고리즘 설계</li>
-            <li>LSTM에서 CNN으로 전환: ABP 신호의 국소 파형 패턴 추출에 CNN이 적합하다 판단</li>
-            <li>1D → 3채널 변환(원본 ABP / Slope / FFT) + Sliding Window로 학습 데이터 확보</li>
+            <li>수술 중 ABP(동맥혈압) 신호로 SVV(일회박출량변이)를 10초 단위 예측하는 AI 모델 단독 개발</li>
+            <li>기존 LSTM 구조를 1D CNN으로 재설계해 예측 오차(MSE) 51.6% 감소</li>
           </ul>
           <div class="project-metrics">
             <span class="metric">MSE 51.6% 감소 (20.25 → 9.8)</span>
-            <span class="metric">데이터 손실률 15% 절감</span>
           </div>
           <div class="project-stack">
             <span class="tag">PyTorch</span><span class="tag">Signal Processing</span>
@@ -696,13 +634,14 @@
           <div class="ps-title">// PROBLEM & SOLUTION</div>
 
           <div class="ps-item">
-            <div class="ps-problem">의료 현장의 복합적인 노이즈 — 신호 품질 심각 저하</div>
-            <div class="ps-context">수술 중 기계 소음 등 불규칙한 노이즈가 ABP 신호에 혼입 → 데이터 품질과 모델 학습 정확도 저하</div>
+            <div class="ps-problem">수술실 환경의 노이즈 — 신호 품질 저하</div>
+            <div class="ps-context">수술 중 말소리, 수술 도구 충격음 등 다양한 외부 요인이 ABP 신호에 혼입. 데이터 품질이 낮아 모델 학습 자체가 어려운 상황.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>수술실 직접 참관 + 의료진 협업으로 노이즈 발생 원인을 도메인 관점에서 파악</li>
-              <li>특정 Hz 대역 주파수 필터링 + Gradient 기반 Threshold 알고리즘 직접 설계</li>
-              <li>중요 생체 신호 보존하면서 외부 노이즈만 제거 → 데이터 손실률 15% 절감</li>
+              <li>수술실 직접 참관 + 담당 의사 자문으로 노이즈 원인을 도메인 관점에서 파악</li>
+              <li>특정 Hz 대역 주파수 필터링 + 신호의 Slope 기반 Threshold 룰로 이상치 제거</li>
+              <li>모델이 아닌 룰 베이스 전처리 (전문의와 협의해 임계값 결정)</li>
+              <li>정제 후 전체 데이터의 약 85%를 학습에 활용 가능</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -721,14 +660,14 @@
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">1D 데이터의 정보 표현 한계 + LSTM 구조적 비효율</div>
-            <div class="ps-context">1D 시계열만으로 시간적·주파수적 특징 동시 반영 어려움. LSTM은 장기 의존성에 강하나 ABP 파형의 국소 패턴(수축기·이완기 구간) 추출에는 CNN 대비 비효율</div>
+            <div class="ps-problem">기존 LSTM 구조의 한계 + 1D 데이터 표현 부족</div>
+            <div class="ps-context">초기 구현은 LSTM 기반이었지만, 수술실 데이터 양도 적고 ABP 파형의 국소 패턴(수축기·이완기) 추출엔 한계. 담당 의사 인터뷰에서 "ABP 파형 그림만 봐도 SVV 감이 온다"는 피드백을 받고, 시계열을 시각적 패턴으로 다루는 게 더 적합하다고 판단.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>1D ABP 원본 + Slope(dP/dt) + FFT를 3채널로 변환 → 다양한 특징 동시 학습</li>
-              <li>LSTM → 1D CNN 전환: 국소 파형 패턴 추출 성능 향상</li>
-              <li>Separable Convolution 적용 → 경량화와 성능 최적화 동시 달성</li>
-              <li>Sliding Window (10초 window, 2초 step) → 한정 데이터에서 학습 샘플 수 확보</li>
+              <li>1D ABP 원본 + Slope(dP/dt) + FFT를 3채널로 변환, CNN 입력으로 사용</li>
+              <li>3채널이 서로 다른 도메인 특성(시간/변화율/주파수)을 가지므로, 한 번에 합치기보다 채널별로 독립 처리 후 통합 feature를 학습하도록 Separable Convolution 적용</li>
+              <li>제한된 데이터에서 Sliding Window(10초 window, 2초 step)로 학습 샘플 확장</li>
+              <li>최종적으로 ONNX 변환을 통해 추론 가능한 형태로 정리</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -738,16 +677,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="ps-item">
-            <div class="ps-problem">제한된 환자 데이터 — 과적합 및 일반화 성능 저하</div>
-            <div class="ps-context">한정된 환자 수로 인해 특정 케이스에 과적합될 가능성 + 다양한 환자에 대한 예측 신뢰도 확보 필요</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>Noise Injection으로 다양한 노이즈 환경에 대한 강건성 향상</li>
-              <li>배치 방식에서 Online Inference 시스템으로 전환 → 임상 현장 실시간 활용 가능</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -783,7 +712,7 @@
       <div class="award-icon">🔒</div>
       <div class="award-content">
         <div class="award-title">특허 등록 — 타겟 이미지를 식별하는 방법 및 장치</div>
-        <div class="award-sub">등록번호: 제10-2837662호 · 다중 채널 이미지 기반 ROI 식별 기술 · 카드/신분증 Detection 프로젝트 핵심 기술로 정확도 3.21%p 향상 기여</div>
+        <div class="award-sub">등록번호: 제10-2837662호 · 다중 채널 이미지 기반 ROI 식별 기술 · 카드/신분증 Detection 프로젝트의 1-Stage 구조 핵심 기술</div>
       </div>
       <div class="award-year">2025.07</div>
     </div>
@@ -791,7 +720,7 @@
       <div class="award-icon">📝</div>
       <div class="award-content">
         <div class="award-title">특허 출원 — 합성 문서 생성 방법 및 시스템</div>
-        <div class="award-sub">출원번호: 10-2026-0032723 · 비정형 문서 레이아웃·문맥 정보를 보존하며 합성 데이터를 생성하는 파이프라인 · VLM KIE 프로젝트 데이터 병목 문제 해결</div>
+        <div class="award-sub">출원번호: 10-2026-0032723 · 비정형 문서 레이아웃·문맥 정보를 보존하며 합성 데이터를 생성하는 파이프라인 · VLM KIE 프로젝트 데이터 병목 해결</div>
       </div>
       <div class="award-year">2026.02</div>
     </div>
