@@ -35,7 +35,6 @@
       pointer-events: none; z-index: 9999; opacity: 0.4;
     }
 
-    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
@@ -51,7 +50,6 @@
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* HERO */
     .hero {
       min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
       padding: 8rem 4rem 4rem; position: relative; overflow: hidden;
@@ -101,14 +99,12 @@
     .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-    /* SECTION */
     section { padding: 6rem 4rem; max-width: 1100px; margin: 0 auto; }
     .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; }
     .section-num { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.1em; }
     .section-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; }
     .section-line { flex: 1; height: 1px; background: var(--border); }
 
-    /* HIGHLIGHTS */
     .highlights-list { display: flex; flex-direction: column; gap: 0.8rem; }
     .highlight-item {
       display: flex; align-items: flex-start; gap: 1rem;
@@ -121,7 +117,6 @@
     .highlight-text { font-size: 0.88rem; color: var(--text); line-height: 1.65; }
     .highlight-text strong { color: var(--text); font-weight: 600; }
 
-    /* SKILLS */
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
     .skill-card {
       background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
@@ -135,7 +130,6 @@
       border-radius: 4px; background: var(--bg3); color: var(--text2); border: 1px solid var(--border);
     }
 
-    /* EXPERIENCE */
     .exp-item {
       display: grid; grid-template-columns: 200px 1fr; gap: 2rem;
       padding: 2.5rem 0; border-bottom: 1px solid var(--border);
@@ -152,7 +146,6 @@
     }
     .exp-projects { display: flex; flex-direction: column; gap: 2.5rem; }
 
-    /* PROJECT CARD */
     .project-card {
       background: var(--bg2); border: 1px solid var(--border);
       border-radius: 12px; overflow: hidden; transition: border-color 0.2s;
@@ -170,7 +163,6 @@
     }
     .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
-    /* PROBLEM / SOLUTION */
     .ps-section { border-top: 1px solid var(--border); padding: 1.8rem; }
     .ps-title { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 1.5rem; }
     .ps-item { margin-bottom: 2rem; }
@@ -196,7 +188,6 @@
     }
     .ps-sol li::before { content: '·'; position: absolute; left: 0; color: var(--accent); }
 
-    /* IMAGES */
     .img-block { margin-top: 1.2rem; }
     .img-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: stretch; }
     .img-figure { display: flex; flex-direction: column; flex: 1; min-width: 0; }
@@ -212,7 +203,6 @@
       color: var(--text3); margin-top: 0.4rem; line-height: 1.4;
     }
 
-    /* AWARDS */
     .awards-list { display: flex; flex-direction: column; gap: 1rem; }
     .award-item {
       display: flex; align-items: flex-start; gap: 1.2rem;
@@ -226,7 +216,6 @@
     .award-sub { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
     .award-year { font-family: var(--mono); font-size: 0.7rem; color: var(--text3); white-space: nowrap; padding-top: 0.15rem; }
 
-    /* ACTIVITIES */
     .activities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
     .activity-card {
       background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
@@ -238,7 +227,6 @@
     .activity-sub { font-size: 0.82rem; color: var(--text2); line-height: 1.6; margin-top: 0.3rem; }
     .activity-period { font-family: var(--mono); font-size: 0.7rem; color: var(--text3); margin-top: 0.4rem; }
 
-    /* CONTACT */
     .contact-section { text-align: center; padding: 6rem 4rem; }
     .contact-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
     .contact-section p { color: var(--text2); margin-bottom: 2rem; font-size: 0.95rem; }
@@ -279,7 +267,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-tag">// VISION AI ENGINEER</div>
   <h1 class="hero-name">김상현<span>.</span></h1>
@@ -294,7 +281,6 @@
   </div>
 </div>
 
-<!-- HIGHLIGHTS -->
 <section id="highlights">
   <div class="section-header">
     <span class="section-num">01</span>
@@ -325,7 +311,6 @@
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="section-header">
     <span class="section-num">02</span>
@@ -375,7 +360,6 @@
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-header">
     <span class="section-num">03</span>
@@ -386,16 +370,15 @@
   <div class="exp-item">
     <div class="exp-meta">
       <div class="exp-company">POSICUBE</div>
-      <div class="exp-period">2022.08 — 현재</div>
+      <div class="exp-period">2022.08 — 2026.06</div>
       <div class="exp-role-badge">Vision AI Engineer</div>
     </div>
     <div class="exp-projects">
 
-      <!-- VLM -->
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-name">VLM 기반 문서 인식 솔루션 개발</div>
-          <div class="project-period">2025.10 — 현재 · 3인 팀 · 모델 선정·데이터 파이프라인·추론 최적화 담당</div>
+          <div class="project-period">2025.10 — 2026.06 · 3인 팀 · 모델 선정·데이터 파이프라인·추론 최적화 담당</div>
           <p class="project-intro">
             비정형 행정/금융 문서에서 레이아웃과 문맥을 해석하는 KIE 모델 개발. PaddleOCR도 검토했지만 bbox 좌표를 같이 못 뽑는 한계가 있어서 VLM 방식으로 가야 한다고 판단했습니다. Qwen3-VL은 bbox 출력 지원 + 당시 최신 성능 두 가지 이유로 선정했습니다.
           </p>
@@ -408,8 +391,6 @@
             <span class="tag">Qwen3-VL</span>
             <span class="tag">vLLM</span>
             <span class="tag">AWQ / FP8</span>
-            <span class="tag">DeepSpeed ZeRO-3</span>
-            <span class="tag">Flash Attention 2</span>
             <span class="tag">HuggingFace</span>
           </div>
         </div>
@@ -417,12 +398,12 @@
           <div class="ps-title">// PROBLEM & SOLUTION</div>
 
           <div class="ps-item">
-            <div class="ps-problem">학습 데이터 부재 — 개인정보 이슈로 실데이터 확보 불가</div>
-            <div class="ps-context">행정·금융 문서는 개인정보를 포함하고 있어서 리얼 데이터를 학습에 쓰는 게 구조적으로 불가능한 환경.</div>
+            <div class="ps-problem">학습 데이터 부재 — 보안 이슈로 실데이터 확보 불가</div>
+            <div class="ps-context">행정·금융 문서는 보안 이슈로 실제 데이터를 학습에 쓰는 게 구조적으로 불가능한 환경.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>실제 문서의 레이아웃과 폰트 분포를 분석해서 Python 기반 문서 생성 엔진 직접 설계</li>
-              <li>인쇄 노이즈, 기울기, 도장 겹침 같은 엣지 케이스 포함한 합성 데이터 파이프라인 구축</li>
+              <li>실제 문서 샘플을 GPT로 HTML 변환(레이아웃·문맥 보존) 후 이미지로 렌더링하는 합성 데이터 파이프라인 자체 설계</li>
+              <li>배경 합성 + Perspective 변환 + Augmentation을 적용해 다양한 문서 유형을 대량 자동 생성</li>
               <li>해당 파이프라인 특허 출원 (10-2026-0032723)</li>
             </ul>
             <div class="img-block">
@@ -445,33 +426,23 @@
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
               <li>AWQ / FP8 양자화 적용 → F1 delta -0.0002 수준 손실로 메모리 절감</li>
-              <li>vLLM PagedAttention 도입 → A6000 GPU 1장에서 실시간 추론 가능</li>
+              <li>vLLM 도입 → 배치 처리 및 지연시간 개선으로 단일 GPU 실시간 추론 확보</li>
             </ul>
           </div>
 
-          <div class="ps-item">
-            <div class="ps-problem">생성형 모델의 출력 불안정성 — Hallucination 및 포맷 오류</div>
-            <div class="ps-context">VLM 특성상 결과 JSON 포맷이 깨지거나 환각이 발생할 위험.</div>
-            <div class="ps-sol-label">→ SOLUTION</div>
-            <ul class="ps-sol">
-              <li>모델 출력을 정해진 JSON 스키마에 매핑하는 후처리 Parser 구현</li>
-              <li>필요 필드 추출 여부 검증 로직 추가 → 데이터 정합성 확보</li>
-            </ul>
-          </div>
         </div>
       </div>
 
-      <!-- DETECTION -->
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-name">카드/신분증 Detection 모델 개발 및 상용화</div>
-          <div class="project-period">2023.05 — 현재 · 단독 개발 · 설계·학습·재학습 사이클 전 과정 담당</div>
+          <div class="project-period">2023.05 — 2026.06 · 단독 개발 · 설계·학습·재학습 사이클 전 과정 담당</div>
           <p class="project-intro">
-            모바일/서버 환경에서 신분증·카드를 인식하는 ROI Detection 모델을 단독 개발하고, 현재 다수 금융권 고객사 서비스에 탑재되어 약 3년간 운영 중. 학습된 모델은 ONNX로 변환해 엔진 측에 전달하는 방식으로 배포되며, 신규 카드 추가·실패 케이스 대응·정확도 개선을 지속적으로 반영하는 라이브 모델입니다. 이 모델의 핵심인 다중 채널 ROI 식별 방법은 특허로 등록되어 있습니다 (10-2837662호).
+            모바일/서버 환경에서 신분증·카드를 인식하는 ROI Detection 모델을 단독 개발하고, 다수 금융권 고객사 서비스에 탑재되어 약 3년간 운영한 라이브 모델입니다. 학습된 모델은 ONNX로 변환해 엔진 측에 전달하는 방식으로 배포되며, 신규 카드 추가·실패 케이스 대응·정확도 개선을 지속적으로 반영했습니다. 이 모델의 핵심인 다중 채널 ROI 식별 방법은 특허로 등록되어 있습니다 (10-2837662호).
           </p>
           <div class="project-metrics">
             <span class="metric">정확도 98.9%</span>
-            <span class="metric">ROI Score 0.9635</span>
+            <span class="metric">ROI Score 0.9666</span>
             <span class="metric">추론 속도 20% 향상</span>
             <span class="metric">특허 등록</span>
           </div>
@@ -507,11 +478,11 @@
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">On-Device 리소스 제약 — 1MB 이하 경량화와 정확도 유지</div>
-            <div class="ps-context">모바일 배포 요건상 1MB 이하 모델 크기 필요. 단순 경량화하면 특징 추출 능력이 떨어짐.</div>
+            <div class="ps-problem">On-Device 리소스 제약 — 경량화와 정확도 유지</div>
+            <div class="ps-context">모바일 배포 요건상 엄격한 모델 크기·속도 제약. 단순 경량화하면 특징 추출 능력이 떨어짐.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>SE-Module 포함 Mobile-friendly 아키텍처 자체 설계 → 경량화 시 성능 손실 최소화</li>
+              <li>SE-Module를 적용한 Mobile-friendly 아키텍처로 경량화 시 성능 손실 최소화</li>
               <li>입력 이미지 크기 최적화 + Attention 메커니즘으로 카드 외곽선 같은 중요 특징 집중</li>
             </ul>
             <div class="img-block">
@@ -529,8 +500,7 @@
             <div class="ps-context">16만 장 전수 분석 결과 Contrast, Saturation, Blur, AreaRatio 등 통계적 갭 확인. 특히 Saturation이 2배 이상 차이 나는 게 가장 큰 원인.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>분포 갭을 보정하는 방향으로 Augmentation 파이프라인 재설계</li>
-              <li>Random Color Augmentation + 가상 데이터 생성으로 클래스 불균형 함께 해소</li>
+              <li>Augmentation 파라미터를 실제 촬영 환경에 맞게 전면 재설계해 분포 불일치 해소</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -552,10 +522,10 @@
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
               <li>CNN+Area Attention 먼저 시도했으나 효과 작아서 ViT 백본으로 전환 → global feature 활용으로 클래스 구분 성능 회복</li>
-              <li>Attention은 Area Attention(행/열 단위 지역 패턴)과 Linear Attention(전역 문맥)을 조합 설계</li>
+              <li>Attention은 Area Attention(행/열 단위 지역 패턴)과 Global Attention(전역 문맥)을 조합 설계</li>
               <li>Loss 전면 재설계: MSE+CE → OHEM+Focal, Dice, IoU, Distance-Transform Boundary Loss</li>
               <li>LossWeightScheduler + ModelEMA 도입</li>
-              <li>데이터 개편과 Loss 개편을 함께 가져가 ROI Score 0.9635 회복 (확장 전 최고치 0.9633 초과)</li>
+              <li>데이터 개편과 Loss 개편을 함께 가져가 ROI Score 0.9666 회복 (확장 전 최고치 0.9633 초과)</li>
             </ul>
           </div>
 
@@ -581,7 +551,6 @@
         </div>
       </div>
 
-      <!-- QUASAR -->
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-name">QUASAR: AI 프로필 생성 앱 개발</div>
@@ -603,7 +572,7 @@
             <div class="ps-context">측면, 반측면 등 다양한 각도의 셀카 입력 시 생성 결과의 일관성이 깨지고 얼굴이 부자연스럽게 나오는 문제.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>Delaunay 삼각분할 기반 Mean Face(평균 얼굴) 생성 → 입력 이미지 전체 특징 통합</li>
+              <li>오픈소스 Mean Face 기법으로 입력 이미지 전체 특징 통합</li>
               <li>Frontalization(정면화) 적용 → 입력 각도와 무관하게 일관된 정면 구도 확보</li>
             </ul>
             <div class="img-block">
@@ -622,11 +591,11 @@
 
           <div class="ps-item">
             <div class="ps-problem">안경 착용 입력 시 콧등 아티팩트</div>
-            <div class="ps-context">안경 쓴 사진이 섞이면 Mean Face 생성 과정에서 안경을 얼굴의 일부로 오인 → 눈 주변 어두워지거나 콧등 아티팩트 발생.</div>
+            <div class="ps-context">안경 쓴 사진이 섞이면 생성 과정에서 안경을 얼굴의 일부로 오인 → 눈 주변 어두워지거나 콧등 아티팩트 발생.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>안경 감지 모델로 착용 여부 판별 → 착용 사진에만 선별적으로 안경 제거 모델 적용</li>
-              <li>아티팩트 없는 평균 얼굴 생성</li>
+              <li>오픈소스 안경 제거 모델을 전처리 단계에 통합 → 착용 사진의 안경 제거</li>
+              <li>아티팩트 없는 생성 결과 확보</li>
             </ul>
             <div class="img-block">
               <div class="img-row" style="margin-top:0.8rem;">
@@ -683,7 +652,6 @@
   </div>
 </section>
 
-<!-- AWARDS -->
 <section id="awards">
   <div class="section-header">
     <span class="section-num">04</span>
@@ -726,7 +694,6 @@
   </div>
 </section>
 
-<!-- ACTIVITIES -->
 <section id="activities">
   <div class="section-header">
     <span class="section-num">05</span>
@@ -785,7 +752,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <div class="contact-section" id="contact">
   <h2>Contact</h2>
   <p>새로운 기회나 협업에 열려 있습니다.</p>
@@ -795,7 +761,7 @@
   </div>
 </div>
 
-<footer>© 2026 Sanghyun Kim · Last updated May 2026</footer>
+<footer>© 2026 Sanghyun Kim · Last updated June 2026</footer>
 
 </body>
 </html>
