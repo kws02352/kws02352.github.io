@@ -272,8 +272,8 @@
   <h1 class="hero-name">김상현<span>.</span></h1>
   <div class="hero-title">Computer Vision · Model Optimization · Data</div>
   <p class="hero-desc">
-    금융권 카드·신분증 ROI Detection 모델을 직접 설계해 약 3년간 운영했습니다.<br>
-    데이터가 없을 땐 학습 데이터를 직접 설계하고, 모바일·단일 GPU에 맞게 추론을 최적화해 왔습니다.
+    잘된 케이스보다 잘못 나온 케이스를 먼저 봅니다.<br>
+    금융권 카드·신분증 ROI Detection 모델을 단독으로 설계해, 60개 이상 고객사에서 들어온 실패 케이스를 데이터와 모델로 고치며 약 3년간 운영했습니다.
   </p>
   <div class="hero-links">
     <a href="https://github.com/kws02352" class="btn btn-primary" target="_blank">GitHub</a>
@@ -290,7 +290,7 @@
   <div class="highlights-list">
     <div class="highlight-item">
       <div class="highlight-icon">SERVICE</div>
-      <div class="highlight-text"><strong>ROI Detection 모델 단독 개발·유지보수</strong> — 다수 금융권 고객사 서비스에 탑재돼 약 3년 운영. 클래스 확장으로 떨어진 ROI Score를 0.9410 → 0.9666으로 회복, 저가형 안드로이드에서 추론 100ms 이하.</div>
+      <div class="highlight-text"><strong>ROI Detection 모델 단독 개발·운영</strong> — 60개 이상 금융권 고객사 서비스에 탑재돼 약 3년 운영. 실패 케이스를 분석해 재현 데이터 생성과 구조 재설계로 대응했고, 클래스 확장으로 떨어진 평균 IoU를 0.9410 → 0.9666으로 회복, 저가형 안드로이드에서 추론 100ms 이하.</div>
     </div>
     <div class="highlight-item">
       <div class="highlight-icon">DATA</div>
@@ -326,7 +326,6 @@
       <div class="skill-card-label">LANGUAGES</div>
       <div class="skill-tags">
         <span class="tag">Python (Expert)</span>
-        <span class="tag">C++ (Familiar)</span>
       </div>
     </div>
     <div class="skill-card">
@@ -384,14 +383,14 @@
       <div class="project-card">
         <div class="project-card-header">
           <div class="project-name">카드/신분증 ROI Detection 모델 개발 및 운영</div>
-          <div class="project-period">2023.05 — 2026.06 · 단독 개발 · 모델 구조 설계·학습, ONNX 변환, 엔진 로직, 재학습 사이클</div>
+          <div class="project-period">2023.05 — 2026.06 · 단독 개발 · 실패 케이스 분석, 데이터 생성, 모델 구조 설계·학습, ONNX 변환, 엔진 로직</div>
           <p class="project-intro">
-            금융권 OCR 서비스의 첫 단계로, 촬영 이미지에서 카드·신분증 영역과 꼭지점을 찾는 ROI Detection 모델입니다. 학습된 모델을 ONNX로 변환해 엔진에 전달하는 방식으로 배포되며, 다수 금융권 고객사 서비스에 탑재돼 약 3년간 운영됐습니다. 이 모델의 핵심인 다중 채널 ROI 식별 방법은 특허로 등록되어 있습니다 (제10-2837662호).
+            금융권 OCR 서비스의 첫 단계로, 촬영 이미지에서 카드·신분증 영역과 꼭지점을 찾는 ROI Detection 모델입니다. 학습된 모델을 ONNX로 변환해 엔진에 전달하는 방식으로 배포되며, 60개 이상 금융권 고객사 서비스에 탑재돼 약 3년간 운영됐습니다. 이 모델의 핵심인 다중 채널 ROI 식별 방법은 특허로 등록되어 있습니다 (제10-2837662호).
           </p>
           <div class="project-metrics">
-            <span class="metric">ROI Score 0.9410 → 0.9666</span>
-            <span class="metric">이전 CNN 대비 추론 속도 20% 향상</span>
-            <span class="metric">100ms 이하 · 1.1MB</span>
+            <span class="metric">평균 IoU 0.9410 → 0.9666</span>
+            <span class="metric">실패 케이스 재현 데이터 생성</span>
+            <span class="metric">100ms 이하 · 1MB 이하</span>
             <span class="metric">특허 등록</span>
           </div>
           <div class="project-stack">
@@ -405,6 +404,17 @@
         </div>
         <div class="ps-section">
           <div class="ps-title">// PROBLEM & SOLUTION</div>
+
+          <div class="ps-item">
+            <div class="ps-problem">고객사 실패 케이스 — 틀린 이미지부터 분석</div>
+            <div class="ps-context">상용화 이후 고객사에서 실패 케이스가 계속 들어옴. 분석해 보니 손가락 가림, 손 위에 올린 카드, 카드 가장자리와 손 외곽이 겹쳐 가장자리를 길게 검출하는 유형이 반복됨.</div>
+            <div class="ps-sol-label">→ SOLUTION</div>
+            <ul class="ps-sol">
+              <li>손 영역만 분리(누끼)해 카드와 합성하고, 다양한 배경 합성과 회전·조명·블러 변형으로 실패 유형을 재현하는 학습 데이터 생성</li>
+              <li>재학습 → ONNX 변환 → 엔진 측 전달 사이클을 실패 케이스가 들어올 때마다 직접 반복, 약 3년간 라이브 모델 운영</li>
+            </ul>
+            <div class="ps-context" style="margin-top:0.8rem;">참고: 이 모델이 1단계로 들어간 OCR 파이프라인(3개 모델)의 end-to-end 정확도는 98.9%입니다. 담당 모델 단독 지표는 평균 IoU입니다.</div>
+          </div>
 
           <div class="ps-item">
             <div class="ps-problem">기존 OpenCV 방식의 구조적 한계</div>
@@ -427,22 +437,22 @@
 
           <div class="ps-item">
             <div class="ps-problem">모바일 배포 제약</div>
-            <div class="ps-context">저가형 안드로이드 ONNX 4스레드 기준 추론 100ms 이하, 모델 크기 1MB 내외가 요구됨.</div>
+            <div class="ps-context">저가형 안드로이드 ONNX 4스레드 기준 추론 100ms 이하, 모델 크기 1MB 이하가 요구됨.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
               <li>파라미터 수와 추론 속도를 계속 측정하며 구조를 실험하고, 속도 기준 안에서 성능을 최대로 확보</li>
-              <li>추론 100ms 이하, 모델 크기 약 1.1MB로 저가형 단말 탑재</li>
+              <li>추론 100ms 이하, 모델 크기 1MB 이하로 저가형 단말 탑재</li>
             </ul>
           </div>
 
           <div class="ps-item">
-            <div class="ps-problem">클래스 확장(8→11종) 후 ROI Score 하락</div>
-            <div class="ps-context">지원 카드가 늘면서 ROI Score가 0.9633 → 0.9410으로 하락. 구조·데이터·Loss 세 방향에서 대응.</div>
+            <div class="ps-problem">클래스 확장(8→11종) 후 평균 IoU 하락</div>
+            <div class="ps-context">지원 카드가 늘면서 평균 IoU(평가셋 약 1.5만 장)가 0.9633 → 0.9410으로 하락. 구조·데이터·Loss 세 방향에서 대응.</div>
             <div class="ps-sol-label">→ SOLUTION</div>
             <ul class="ps-sol">
-              <li>구조: 로컬 특성에 의존하는 CNN 백본을 TinyViT로 교체. 인코더에 행/열을 번갈아 쌓은 Area Attention, 디코더에 Linear Attention 적용해 100ms 제약 유지, 이전 CNN 모델 대비 추론 속도 20% 향상</li>
+              <li>구조: 로컬 특성에 의존하는 CNN 백본을 TinyViT로 교체. 인코더에 행/열을 번갈아 쌓은 Area Attention, 디코더에 Linear Attention 적용. 구조가 커졌지만 이전 CNN 모델과 비슷한 추론 속도를 유지해 100ms 제약 충족</li>
               <li>Loss: MSE+CE → OHEM+Focal(클래스 불균형), Dice(영역 겹침), IoU, Distance-Transform Boundary Loss(경계 정밀도)로 재설계, LossWeightScheduler + ModelEMA 도입</li>
-              <li>데이터: 아래 Augmentation 재설계와 함께 가져가 ROI Score 0.9666 달성 (확장 전 최고치 0.9633 초과)</li>
+              <li>데이터: 아래 Augmentation 재설계와 함께 가져가 평균 IoU 0.9666 달성 (확장 전 최고치 0.9633 초과)</li>
             </ul>
           </div>
 
@@ -477,16 +487,6 @@
             </ul>
           </div>
 
-          <div class="ps-item">
-            <div class="ps-problem">운영 사이클 — 라이브 모델 지속 업데이트</div>
-            <div class="ps-context">상용 이후에도 신규 카드 종류 추가, 고객사 실패 케이스 대응이 계속 필요한 상황.</div>
-            <div class="ps-sol-label">→ OPERATION</div>
-            <ul class="ps-sol">
-              <li>데이터 수집 → 원인 분석 → 재학습 → ONNX 재변환 사이클 직접 담당</li>
-              <li>약 3년간 라이브 모델 운영</li>
-            </ul>
-            <div class="ps-context" style="margin-top:0.8rem;">참고: 이 모델이 1단계로 들어간 OCR 파이프라인(3개 모델)의 end-to-end 정확도는 98.9%입니다.</div>
-          </div>
         </div>
       </div>
 
