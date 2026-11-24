@@ -18,52 +18,47 @@
   <main class="doc-content">
 <p><a href="https://github.com/kws02352">github.com/kws02352</a> | <a href="https://kws02352.github.io">kws02352.github.io</a><br><a href="https://aikim.tistory.com">aikim.tistory.com</a></p>
 <h1>김상현 (Kim Sanghyun)</h1>
-<p><strong>Vision AI Engineer</strong></p>
+<p><strong>잘된 케이스보다 잘못 나온 케이스를 먼저 보는 Vision AI 엔지니어</strong></p>
+<p>특허 등록 1건(제10-2837662호) · 출원 1건(10-2026-0032723) | SCI 제1저자 (병리 조직 이미지 분류, 2021)</p>
 <hr />
 <h2>SUMMARY</h2>
-<p>모델 구조 설계부터 학습 데이터 설계, 배포 환경에 맞춘 추론 최적화까지 다뤄 온 경력 4년 5개월의 Vision AI 엔지니어입니다.</p>
-<p>포지큐브에서 은행과 증권 앱의 비대면 계좌개설에 쓰이는 신분증 ROI Detection 모델을 단독으로 설계하고 운영했습니다. 60개 이상 금융권 고객사에 탑재돼 약 3년간 쓰였고, 지원 클래스를 5종에서 11종까지 늘리는 동안 매 단계 성능을 개선해 재배포했습니다. 이 모델의 3채널 마스크 구조는 특허로 등록됐습니다.</p>
-<p>보안상 실제 고객 문서를 받을 수 없던 문서 KIE 프로젝트에서는 빈 양식만으로 학습 데이터 약 4.7만 건을 만드는 파이프라인을 설계해 F1을 0.75에서 0.91로 올렸고, 이 파이프라인은 특허로 출원했습니다.</p>
-<p>저가형 안드로이드에서 추론 100ms 이하, 8B VLM을 단일 GPU에 올리는 4bit 양자화처럼 실제 배포 환경의 제약 안에서 모델을 맞춰 왔습니다. 모델을 바꾸기 전에 학습 데이터가 실제 환경을 반영하는지부터 확인합니다.</p>
-<p>이전에는 서울아산병원에서 수술 중 생체신호로 혈역학 지표를 예측하는 모델을 개발했습니다.</p>
+<p>경력 4년 5개월의 Vision AI 엔지니어입니다. 성능을 올려야 할 때 잘 맞힌 결과보다 틀린 결과를 먼저 열어 봅니다. 포지큐브에서는 60개 이상 금융권 고객사에서 들어온 실패 케이스를 받아 원인을 분석하고, 필요하면 데이터를 만들고, 필요하면 모델 구조를 다시 설계하면서 신분증 인식 모델을 3년간 단독으로 운영했습니다.</p>
+<p>손가락 가림이나 손 위에 올린 카드처럼 자주 틀리는 유형은 손 영역을 분리해 카드와 합성하는 방식으로 재현 데이터를 만들어 재학습했습니다. 카드 방향을 몰라 4번 추론하던 구조는 3채널 마스크 1-Stage 구조로 다시 설계해 특허를 받았고, 저가형 안드로이드에서 추론 100ms 이하, 모델 크기 1MB 이하를 유지했습니다.</p>
+<p>보안상 실제 고객 문서를 받을 수 없던 문서 KIE 프로젝트에서는 빈 양식만으로 합성 학습 데이터 약 4.7만 건을 만드는 파이프라인을 설계했고, 이 데이터로 학습한 모델의 필드 F1이 0.75에서 0.91로 올랐습니다.</p>
 <h2>EXPERIENCE</h2>
 <p>2022.08 ~ 2026.06</p>
-<h3>포지큐브 (POSICUBE) | Vision AI Engineer</h3>
-<p>금융권 <strong>신분증과 문서 인식 솔루션</strong>과 AI 프로필 생성 앱 <strong>QUASAR</strong> 개발. AI Dev 3팀 매니저로 신분증 ROI Detection 모델 단독 개발과 운영, 문서 KIE 프로젝트의 학습 데이터와 추론 최적화, 생성 모델 개발 담당</p>
-<h5>신분증 ROI Detection 모델 (2023.05 ~ 2026.06)</h5>
-<p>비대면 계좌개설에서 사용자가 촬영한 신분증과 카드 이미지의 영역과 꼭지점을 찾는 신분증 인식의 첫 단계 모델. 60개 이상 금융권 고객사에 탑재, 약 3년 운영</p>
+<h3>포지큐브 (POSICUBE) | Vision AI Engineer, AI Dev 3팀 매니저</h3>
+<p>금융권 <strong>신분증과 문서 인식 솔루션</strong>과 AI 프로필 생성 앱 <strong>QUASAR</strong> 개발. 신분증 ROI Detection 모델 단독 개발과 운영, 문서 KIE의 학습 데이터와 추론 최적화, 생성 모델 개발 담당</p>
+<h5>신분증 ROI Detection 모델 (2023.05 ~ 2026.06) | 단독 설계·운영</h5>
+<p>은행·증권 앱 비대면 계좌개설에서 사용자가 촬영한 신분증·카드의 영역과 꼭지점을 찾는 신분증 인식의 첫 단계 모델. 60개 이상 금융권 고객사에 탑재, 약 3년 운영</p>
 <ul>
-<li>기존 OpenCV 방식은 가이드 박스 안에서만 동작하고 카드의 회전 방향을 몰라 4방향을 모두 추론. 카드 영역, 방향 판별용 타이틀 영역, 꼭지점을 3채널 마스크로 한 번에 출력하는 1-Stage 구조를 설계해 추론 4회를 1회로 통합. 이 구조로 특허 등록(제10-2837662호)</li>
-<li>지원 클래스를 5종에서 8종, 11종으로 두 차례 확장하며 매 단계 성능을 개선해 재배포. 11종 확장 때 ROI Score가 0.9633에서 0.9410으로 떨어졌고, 백본, 데이터, Loss를 함께 고쳐 0.9666으로 확장 전 최고치를 넘김</li>
-<li>CNN 백본을 TinyViT로 교체하고 인코더에 행/열 교차 Area Attention, 디코더에 Linear Attention 적용. 카드 영역 마스크로 특징을 풀링해 카드 종류를 분류하는 헤드(Seg-Guided Pool)를 추가해 늘어난 클래스 간 구분을 보강</li>
-<li>백본 교체만으로는 성능이 오르지 않아 원인을 다시 찾았고, 적용돼 있던 Augmentation 설정이 실제 촬영 환경과 어긋나 있는 것을 확인해 재설계. Loss는 MSE+CE에서 OHEM+Focal, Dice, Distance-Transform Boundary Loss로 재설계</li>
-<li>저가형 안드로이드 ONNX 4스레드 환경에서 추론 100ms 이하, 모델 크기 약 1.1MB 유지. 이전 CNN 모델 대비 추론 속도 20% 향상</li>
-<li>신규 카드 추가와 고객사 실패 케이스마다 데이터 수집, 원인 분석, 재학습, ONNX 재변환을 직접 수행</li>
+<li><strong>실패 케이스 기반 데이터 생성</strong>: 고객사에서 들어온 실패를 분석해 손가락 가림, 손 위에 올린 카드, 카드 가장자리와 손 외곽이 겹쳐 가장자리를 길게 검출하는 유형을 확인. 손 영역을 분리해 카드와 합성하고, 다양한 배경 합성과 회전·조명·블러 변형으로 실패 유형을 재현하는 학습 데이터를 생성. 재학습과 ONNX 변환까지 직접 반복</li>
+<li><strong>출력 구조 재설계</strong>: 기존 OpenCV 방식은 가이드 박스 안에서만 동작하고 카드 방향을 몰라 4방향을 모두 추론. 카드 영역, 방향 판별용 타이틀 영역, 꼭지점을 3채널 마스크로 한 번에 출력하는 1-Stage 구조를 설계해 추론 4회를 1회로 통합. 이 구조로 특허 등록(제10-2837662호)</li>
+<li><strong>클래스 확장 대응</strong>: 지원 클래스를 5종에서 8종, 11종으로 확장. 11종 확장 때 평가셋 약 1.5만 장 기준 평균 IoU가 0.9633에서 0.9410으로 하락해, 백본을 TinyViT로 교체하고 카드 영역 마스크로 특징을 풀링하는 분류 헤드(Seg-Guided Pool)를 추가. Loss(OHEM+Focal, Dice, Distance-Transform Boundary)와 증강 설정도 실제 촬영 환경에 맞게 재설계해 0.9666으로 확장 전 최고치를 넘김</li>
+<li><strong>배포 제약 충족</strong>: 백본을 TinyViT로 바꾸고 Attention을 더하면서도 이전 CNN 모델과 비슷한 추론 속도를 유지. 저가형 안드로이드 ONNX Runtime 4스레드 환경에서 추론 100ms 이하, 모델 크기 1MB 이하</li>
 </ul>
-<h5>문서 KIE, VLM 기반 핵심 정보 추출 (2025.10 ~ 2026.06)</h5>
-<p>비정형 금융, 행정 문서에서 핵심 정보를 추출하는 Qwen3-VL 기반 KIE 프로젝트. 3인 팀에서 베이스 모델 선정, 합성 데이터 파이프라인, 검증셋 구성, 양자화 담당. 퇴사 시점 PoC 검증 단계</p>
+<h5>문서 KIE, VLM 기반 핵심 정보 추출 (2025.10 ~ 2026.06) | 3인 팀 · 합성 데이터 파이프라인, 검증셋 구성, 베이스 모델 선정, 양자화 담당</h5>
+<p>비정형 금융·행정 문서에서 핵심 필드를 추출하는 Qwen3-VL 기반 KIE. 퇴사 시점 PoC 검증 단계</p>
 <ul>
-<li>필드 해석, bbox 출력, 실시간성을 기준으로 세 계열 비교. OCR 계열은 필드 간 관계를 해석하지 못하고, 문서 파싱 VLM(MonkeyOCR, Dolphin)은 레이아웃 분석 후 인식하는 2-stage 구조라 지연이 커서 제외. 좌표와 내용을 단일 추론으로 함께 출력하는 Qwen3-VL 선정</li>
-<li>보안상 실제 고객 문서를 받을 수 없어 학습 데이터가 없던 상황. 고객사가 준 빈 양식을 이미지화해 GPT로 HTML 구조를 추출해 렌더링하고, 입력 칸마다 필드 형식(날짜, 금액 등)을 지킨 랜덤 값을 넣어 합성 학습 데이터 약 4.7만 건 생성. 특허 출원(10-2026-0032723)</li>
-<li>고객사가 개인정보를 대체 값으로 기입해 준 실제 작성 문서로 검증셋 구성(5종 15장, 문서당 약 100개 필드). 학습에 없던 영수증 양식을 넣어 처음 보는 양식에 대한 일반화까지 확인. 필드 단위 exact match F1 0.75(Zero-shot)에서 0.91</li>
-<li>8B 모델을 A6000 1장에서 쓸 수 있는지 검증하기 위해 Intel AutoRound로 4bit 양자화한 뒤 AWQ, GPTQ 포맷을 vLLM 환경에서 비교. GPTQ 채택, F1 손실 0.0002 이내</li>
+<li><strong>데이터가 없는 문제를 데이터 생성으로 해결</strong>: 보안상 실제 고객 문서를 받을 수 없어 학습 데이터가 없던 상황. 고객사가 준 빈 양식을 이미지화해 GPT로 HTML 구조를 추출·렌더링하고, 입력 칸마다 필드 형식(날짜, 금액 등)을 지킨 랜덤 값을 넣어 합성 학습 데이터 약 4.7만 건 생성. 이 데이터로 학습한 모델의 필드 단위 exact match F1이 0.75(Zero-shot)에서 0.91로 향상. 특허 출원(10-2026-0032723)</li>
+<li><strong>실제 환경을 반영한 검증셋</strong>: 고객사가 개인정보를 대체 값으로 기입해 준 실제 작성 문서로 검증셋 구성(5종 15장, 문서당 약 100개 필드). 학습에 없던 영수증 양식을 넣어 처음 보는 양식에 대한 일반화까지 확인</li>
+<li><strong>베이스 모델 선정</strong>: 필드 해석, bbox 출력, 실시간성을 기준으로 세 계열 비교. OCR 계열은 필드 간 관계를 해석하지 못하고, 문서 파싱 VLM(MonkeyOCR, Dolphin)은 2-stage 구조라 지연이 커서 제외. 좌표와 내용을 단일 추론으로 출력하는 Qwen3-VL 선정</li>
+<li><strong>단일 GPU 배포 검증</strong>: 8B 모델을 A6000 1장에서 쓰기 위해 Intel AutoRound로 4bit 양자화한 뒤 AWQ, GPTQ 포맷을 vLLM에서 비교. F1 손실 0.0002 이내로 GPTQ 채택</li>
 </ul>
-<h5>QUASAR, AI 프로필 생성 앱 (2024.02 ~ 2025.10)</h5>
-<p>사용자 사진 3~5장으로 AI 프로필 이미지를 만드는 앱의 핵심 생성 모델 개발, 알파 출시</p>
+<h5>QUASAR, AI 프로필 생성 앱 (2024.02 ~ 2025.10) | 모델 파트 2인 · 생성 모델 코드 대부분 직접 구현 (1인은 프롬프트 설계 담당)</h5>
+<p>사용자 사진 3~5장으로 AI 프로필 이미지를 만드는 앱. Stable Diffusion XL + LoRA 파인튜닝으로 사용자 아이덴티티 학습(약 15분), 알파 출시</p>
 <ul>
-<li>Stable Diffusion XL + LoRA 파인튜닝으로 사용자 아이덴티티 학습(학습 약 15분)</li>
-<li>처음엔 모델 구조와 학습 파라미터를 고쳤지만 아이덴티티가 흔들리는 원인은 입력 사진의 각도와 표정 편차였음. Mean Face와 Frontalization으로 입력을 정면 기준으로 정규화해 같은 모델에서 일관성 확보</li>
-<li>안경 쓴 사진이 섞이면 생성 결과의 콧등에 검은 자국이 생겨, 오픈소스 안경 제거 모델을 학습 전처리에 넣어 해결</li>
-<li>닮은 정도는 유사도 지표와 육안 판단이 자주 어긋나 지표를 신뢰하기 어려웠음. 성별과 의상 조건별 프롬프트를 반복 실험하고 안정적으로 제어되는 옵션만 알파에 포함</li>
+<li><strong>실패 원인을 입력에서 찾음</strong>: 모델 구조와 학습 파라미터를 고쳐도 아이덴티티가 흔들려 원인을 다시 찾았고, 입력 사진의 각도·표정 편차가 원인임을 확인. Mean Face와 Frontalization으로 입력을 정면 기준으로 정규화해 같은 모델에서 일관성 확보</li>
+<li><strong>실패 유형별 전처리</strong>: 안경 쓴 사진이 섞이면 생성 결과의 콧등에 검은 자국이 생겨, 오픈소스 안경 제거 모델을 학습 전처리에 넣어 해결</li>
+<li><strong>평가 기준 수립</strong>: 유사도 지표와 육안 판단이 자주 어긋나 지표만 믿지 않고, 성별·의상 조건별 프롬프트를 반복 실험해 안정적으로 제어되는 옵션만 알파에 포함</li>
 </ul>
 <p>2021.07 ~ 2022.01</p>
 <h3>서울아산병원 마취통증의학과, 울산대학교 의과대학 | AI 연구원(계약직)</h3>
 <p>수술 중 동맥혈압(ABP) 신호로 SVV(Stroke Volume Variation)를 10초 단위로 예측하는 모델 개발. 예측 오차(MSE) 20.25에서 9.8로 51.6% 감소</p>
 <ul>
-<li>노이즈 원인을 찾으려고 수술실을 직접 관찰하고 담당 의사에게 자문. 주파수 필터링과 Gradient 임계값 규칙으로 클렌징</li>
-<li>"ABP 파형 그림만 봐도 SVV 감이 온다"는 전문의 인터뷰를 근거로 기존 LSTM을 CNN으로 재설계</li>
-<li>1D 시계열을 원본, Slope, FFT 3채널로 바꾸고, 성격이 다른 채널을 따로 처리하도록 Separable Conv 적용</li>
-<li>수술실 데이터가 부족해 Sliding Window(2초 이동)로 학습 샘플 확장</li>
+<li><strong>노이즈 원인을 현장에서 찾음</strong>: 수술실을 직접 관찰하고 담당 의사에게 자문해 노이즈 원인을 파악. 주파수 필터링과 Gradient 임계값 규칙으로 클렌징</li>
+<li><strong>입력과 모델 재설계</strong>: "ABP 파형 그림만 봐도 SVV 감이 온다"는 전문의 인터뷰를 근거로 기존 LSTM을 CNN으로 재설계. 1D 시계열을 원본, Slope, FFT 3채널로 바꾸고, 성격이 다른 채널을 따로 처리하도록 Separable Conv 적용</li>
+<li><strong>데이터 부족 대응</strong>: 수술실 데이터가 부족해 Sliding Window(2초 이동)로 학습 샘플 확장</li>
 </ul>
 <h2>SKILL</h2>
 <table>
@@ -79,46 +74,30 @@
 <td>PyTorch, OpenCV, Detection/Segmentation 모델 설계, ViT(TinyViT), Attention 설계, Loss 설계</td>
 </tr>
 <tr>
+<td>Data</td>
+<td>실패 케이스 분석, 합성 데이터 생성(이미지 합성, 양식 렌더링), Augmentation 설계, Pandas, NumPy</td>
+</tr>
+<tr>
 <td>추론 최적화</td>
-<td>ONNX(모바일 CPU), 양자화(Intel AutoRound, AWQ, GPTQ), vLLM 벤치마크</td>
+<td>ONNX Runtime(모바일 CPU), 양자화(Intel AutoRound, AWQ, GPTQ), vLLM 벤치마크</td>
 </tr>
 <tr>
 <td>VLM / 생성</td>
 <td>Qwen3-VL, Hugging Face, Stable Diffusion XL, LoRA</td>
 </tr>
 <tr>
-<td>Data</td>
-<td>합성 데이터 생성, Augmentation 설계, Pandas, NumPy</td>
-</tr>
-<tr>
 <td>Language / Tools</td>
-<td>Python, C++(기초), Git, Docker, JIRA</td>
+<td>Python, Git, Docker, JIRA</td>
 </tr>
 </tbody>
 </table>
 <h2>EDUCATION / PATENTS / AWARDS</h2>
-<table>
-<thead>
-<tr>
-<th>기간</th>
-<th>학교</th>
-<th>전공</th>
-<th>상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2015.03 ~ 2021.02</td>
-<td>경기대학교</td>
-<td>컴퓨터과학</td>
-<td>졸업</td>
-</tr>
-</tbody>
-</table>
-<p>특허: 타겟 이미지를 식별하는 방법 및 장치 (등록 제10-2837662호, 2025.07), 합성 문서 생성 방법 및 시스템 (출원 10-2026-0032723, 2026.02)<br>
-논문/수상: SCI 제1저자, Classification of Colorectal Cancer in Histological Images using Deep Neural Networks: An Investigation, Multimedia Tools and Applications (2021), 한국인터넷정보학회 추계학술발표대회 우수 논문상 (2019)<br>
+<p>학력: 경기대학교 컴퓨터과학 졸업 (2015.03 ~ 2021.02)<br>
+특허: 타겟 이미지를 식별하는 방법 및 장치 (등록 제10-2837662호, 2025.07), 합성 문서 생성 방법 및 시스템 (출원 10-2026-0032723, 2026.02)<br>
+논문: SCI 제1저자, Classification of Colorectal Cancer in Histological Images using Deep Neural Networks: An Investigation, Multimedia Tools and Applications (2021)<br>
+수상: 한국인터넷정보학회 추계학술발표대회 우수 논문상 (2019)<br>
 교육: 네이버 부스트캠프 AI Tech (2021), KB국민은행 IT Academy (2022)<br>
-활동: 코드잇 AI 엔지니어 5기, 12기 멘토 (2025 ~ 2026), 경기대학교 캡스톤프로젝트 멘토 (2026)</p>
+활동: 코드잇 AI 엔지니어 과정 멘토 (5기, 12기, 2025 ~ 2026), 경기대학교 캡스톤프로젝트 멘토 (2026)</p>
   </main>
   <p class="print-hint doc-content" style="text-align: center; padding-bottom: 2rem;">
     인쇄/PDF 저장: 브라우저 메뉴에서 인쇄를 누르고 PDF로 저장
